@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-repo.git'
+                git branch: 'main', url: 'https://github.com/Chornyi1979/git_jenkins_test2.git/'
             }
         }
         stage('Static code analysis') {
@@ -15,24 +15,24 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                sh 'docker build -t your-dockerhub-username/your-image-name:latest .'
+                sh 'docker build -t chornyi1979/my-jenkins-agent:latest .'
             }
         }
         stage('Tag Docker image') {
             steps {
                 script {
-                    def dockerImage = docker.build("your-dockerhub-username/your-image-name:${env.BUILD_NUMBER}")
+                    def dockerImage = docker.build("chornyi1979/my-jenkins-agent:${env.BUILD_NUMBER}")
                     dockerImage.push()
-                    dockerImage.tag("your-dockerhub-username/your-image-name:latest")
-                    dockerImage.push("your-dockerhub-username/your-image-name:latest")
+                    dockerImage.tag("chornyi1979/my-jenkins-agent:latest")
+                    dockerImage.push("chornyi1979/my-jenkins-agent:latest")
                 }
             }
         }
         stage('Push Docker image to Docker Hub') {
             steps {
-                sh 'docker login -u your-dockerhub-username -p your-dockerhub-password'
-                sh 'docker push your-dockerhub-username/your-image-name:${env.BUILD_NUMBER}'
-                sh 'docker push your-dockerhub-username/your-image-name:latest'
+                sh 'docker login -u ochornyi -p 1979Ch1922$'
+                sh 'docker push chornyi1979/my-jenkins-agent:${env.BUILD_NUMBER}'
+                sh 'docker push chornyi1979/my-jenkins-agent:latest'
             }
         }
     }
