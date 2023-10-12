@@ -36,12 +36,4 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            slackSend (color: '#36a64f', message: "Build successful!")
-        }
-        failure {
-            slackSend (color: '#ff0000', message: "Build failed!")
-        }
-    }
 }
