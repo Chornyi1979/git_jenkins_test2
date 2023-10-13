@@ -9,7 +9,7 @@ pipeline {
         stage('Static code analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
+                    sh 'mvn sonar:scanner'
                 }
             }
         }
