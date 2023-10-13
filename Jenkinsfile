@@ -9,7 +9,11 @@ pipeline {
         stage('Static code analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh '${scannerHome}/bin/sonar-scanner'
+                    sh 'sonar-scanner -Dsonar.projectKey=SonarQube \
+                    -Dsonar.projectName=SonarQube \
+                    -Dsonar.projectVersion=1.1.1 \
+                    -Dsonar.sources=https://github.com/Chornyi1979/git_jenkins_test2.git \
+                    -Dsonar.java.binaries=.'
                 }
             }
         }
