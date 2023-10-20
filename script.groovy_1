@@ -28,7 +28,7 @@ def buildImage() {
 
 
 def commitVersionUpdate() {
-	withCredentials([usernamePassword(credentialsId: 'GitHub_webhook', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+	withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
 		sh 'git config --global user.email "jenkins1@example.com"'
 		sh 'git config --global user.name "jenkins1"'
 		sh 'git status'
