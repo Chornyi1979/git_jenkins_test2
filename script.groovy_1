@@ -17,20 +17,24 @@ def buildImage() {
 	echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "docker build -t chornyi1979/my-repo:${IMAGE_NAME} ."
+        sh "docker tag chornyi1979/my-repo:${IMAGE_NAME} chornyi1979/my-repo:latest"
+        sh "docker tag chornyi1979/my-repo:${IMAGE_NAME} chornyi1979/my-repo:${BUILD_NUMBER}"
         sh ('echo $PASS | docker login -u $USER --password-stdin')
+        sh "docker push chornyi1979/my-repo:latest"
         sh "docker push chornyi1979/my-repo:${IMAGE_NAME}"
+        sh "docker images -q chornyi1979/my-repo:latest | xargs docker rmi -f"
 	}
 }
 
 
 def commitVersionUpdate() {
 	withCredentials([usernamePassword(credentialsId: 'git_token', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-		sh 'git config --global user.email "jenkins@example.com"'
-		sh 'git config --global user.name "jenkins"'
+		sh 'git config --global user.email "jenkins1@example.com"'
+		sh 'git config --global user.name "jenkins1"'
 		sh 'git status'
 		sh 'git branch'
 		sh 'git config --list'
-		sh ('git remote set-url origin https://$USER:$PASS@github.com/Chornyi1979/git_jenkins.git')
+		sh ('git remote set-url origin https://$USER:$PASS@github.com/Chornyi1979/git_jenkins_test2.git')
 		sh 'git add .'
 		sh 'git commit -m "ci: version bump"'
 		

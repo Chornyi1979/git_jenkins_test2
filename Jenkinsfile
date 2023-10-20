@@ -46,7 +46,7 @@ pipeline {
                 }
             }
         }
-        stage ("build image") {
+        stage ("build docker images") {
             steps {
                 script {
                     gv.buildImage()
@@ -54,28 +54,6 @@ pipeline {
             }
         }
 
-        stage('Build Docker image') {
-            steps {
-                sh 'docker build -t chornyi1979/my-jenkins-agent:latest .'
-            }
-        }
-        stage('Tag Docker image') {
-            steps {
-                script {
-                    def dockerImage = docker.build("chornyi1979/my-jenkins-agent:${env.BUILD_NUMBER}")
-                    dockerImage.push()
-                    dockerImage.tag("chornyi1979/my-jenkins-agent:latest")
-                    dockerImage.push("chornyi1979/my-jenkins-agent:latest")
-                }
-            }
-        }
-        stage('Push Docker image to Docker Hub') {
-            steps {
-                sh 'docker login -u ochornyi -p 1979Ch1922$'
-                sh 'docker push chornyi1979/my-jenkins-agent:${env.BUILD_NUMBER}'
-                sh 'docker push chornyi1979/my-jenkins-agent:latest'
-            }
-        }
         stage ("commit version update") {
             steps {
                 script {
