@@ -17,8 +17,8 @@
   </dependencies>
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <sonar.projectKey>git_jenkins_test2</sonar.projectKey>
-      <sonar.projectName>git_jenkins_test2</sonar.projectName>
+      <sonar.projectKey>git-jenkins-lab2</sonar.projectKey>
+      <sonar.projectName>git-jenkins-lab2</sonar.projectName>
       <sonar.projectVersion>1.1.1</sonar.projectVersion>
       <sonar.sources>src/main/java</sonar.sources>
 
