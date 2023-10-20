@@ -1,10 +1,11 @@
 def gv
 pipeline {
     agent any
+
     tools {
-        maven 'maven-3.9'
-	
+        maven 'maven-3.9'	
     }
+
     stages {
 
         stage ("init") {
@@ -14,15 +15,12 @@ pipeline {
                 }
             }
         }
-
     
         stage('Clone repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/Chornyi1979/git_jenkins_test2.git/'
             }
         }
-
-
 
         stage('Static code analysis') {
             steps {
@@ -39,6 +37,7 @@ pipeline {
                 }
             }
         }
+
         stage ("build jar") {
             steps {
                 script {
@@ -46,6 +45,7 @@ pipeline {
                 }
             }
         }
+
         stage ("build docker images") {
             steps {
                 script {
@@ -61,8 +61,6 @@ pipeline {
                 }
             }   
         }
-
-
     }
     post {
         success {
