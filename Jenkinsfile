@@ -75,7 +75,8 @@ pipeline {
     post {
         always {
             script {
-                if (env.BRANCH_NAME == 'main' && env.CHANGE_ID && (env.GIT_AUTHOR_NAME != 'jenkins' || env.JENKINS_URL)) {
+                def push = JSON.parse(request.body)
+                if (push.pusher.name != 'jenkins') {
                     // trigger downstream jobs or do other actions
                 }
             }
