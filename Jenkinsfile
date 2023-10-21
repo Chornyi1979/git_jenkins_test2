@@ -70,9 +70,8 @@ pipeline {
         failure {
             emailext body: 'Build failed!', subject: 'Build Notification', to: 'ochornyy1979@meta.ua'
         }
-    }
+    
 
-    post {
         always {
             script {
                 def push = JSON.parse(request.body)
