@@ -74,8 +74,7 @@ pipeline {
 
         always {
             script {
-                def push = JSON.parse(request.body)
-                if (push.pusher.name != 'jenkins') {
+                if (env.BRANCH_NAME == 'main' && env.CHANGE_ID && env.JENKINS_URL) {
                     // trigger downstream jobs or do other actions
                 }
             }
