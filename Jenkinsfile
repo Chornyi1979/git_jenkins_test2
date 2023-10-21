@@ -62,12 +62,13 @@ pipeline {
             }   
         }
     }
+
     post {
         success {
-            slackSend (color: '#36a64f', message: "Build successful!")
+            emailext body: 'Build successful!', subject: 'Build Notification', to: 'ochornyy1979@meta.ua'
         }
         failure {
-            slackSend (color: '#ff0000', message: "Build failed!")
+            emailext body: 'Build failed!', subject: 'Build Notification', to: 'ochornyy1979@meta.ua'
         }
     }
 }
