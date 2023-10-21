@@ -75,7 +75,7 @@ pipeline {
     post {
         always {
             script {
-                if (env.BRANCH_NAME == 'main' && env.CHANGE_ID && (env.GIT_AUTHOR_NAME != 'jenkins1' || env.JENKINS_URL)) {
+                if (env.BRANCH_NAME == 'main' && env.CHANGE_ID && (env.GIT_AUTHOR_NAME != 'jenkins' || env.JENKINS_URL)) {
                     // trigger downstream jobs or do other actions
                 }
             }
