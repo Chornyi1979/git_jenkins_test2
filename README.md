@@ -1,2 +1,2 @@
 # git_jenkins_test2
-test 6
+test 7
