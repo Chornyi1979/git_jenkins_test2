@@ -70,14 +70,5 @@ pipeline {
         failure {
             emailext body: 'Build failed!', subject: 'Build Notification', to: 'ochornyy1979@meta.ua'
         }
-    
-
-        always {
-            script {
-                if (env.BRANCH_NAME == 'main' && env.CHANGE_ID && env.JENKINS_URL) {
-                    // trigger downstream jobs or do other actions
-                }
-            }
-        }
     }
 }
