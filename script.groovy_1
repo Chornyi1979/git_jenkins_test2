@@ -38,7 +38,7 @@ def commitVersionUpdate() {
 		sh 'git add .'
 		sh 'git commit -m "ci: version bump"'
 		
-		sh 'git push origin HEAD:main'
+		sh 'git push --no-verify --quiet --set-upstream origin HEAD:main'
 	}
 }	
 
