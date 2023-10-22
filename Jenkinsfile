@@ -55,6 +55,9 @@ pipeline {
         }
 
         stage ("commit GitHub version update") {
+            options {
+                skipDefaultCheckout true
+            }
             steps {
                 script {
                     gv.commitVersionUpdate()
