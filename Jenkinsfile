@@ -54,7 +54,7 @@ pipeline {
             }
         }
 
-        stage ("commit version update") {
+        stage ("commit GitHub version update") {
             steps {
                 script {
                     gv.commitVersionUpdate()
