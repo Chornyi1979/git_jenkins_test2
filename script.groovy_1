@@ -37,7 +37,7 @@ def commitVersionUpdate() {
 		sh ('git remote set-url origin https://$USER:$PASS@github.com/Chornyi1979/git_jenkins_test2.git')
 		sh 'git add .'
 		sh 'git commit -m "ci: version bump"'
-
+                git push origin HEAD:main
 	}
 }	
 
