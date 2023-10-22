@@ -55,6 +55,10 @@ pipeline {
         }
 
         stage ("commit version update") {
+            when {
+                // Виключаємо webhook для стадії build
+                ignore true
+            }
             steps {
                 script {
                     gv.commitVersionUpdate()
