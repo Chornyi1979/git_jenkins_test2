@@ -57,7 +57,7 @@ pipeline {
         stage ("commit version update") {
             when {
                 // Виключаємо webhook для стадії build
-                ignore true
+                changeset ''
             }
             steps {
                 script {
