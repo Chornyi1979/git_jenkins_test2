@@ -1,7 +1,9 @@
 def gv
 pipeline {
     agent any
-
+    parameters {
+        booleanParam(name: 'TRIGGER_PIPELINE', defaultValue: true, description: 'Trigger pipeline in this stage')
+    }
     tools {
         maven 'maven-3.9'	
     }
@@ -55,6 +57,9 @@ pipeline {
         }
 
         stage ("commit GitHub version update") {
+            when {
+                expression { TRIGGER_PIPELINE == false }
+            }
             steps {
                 script {
                     gv.commitVersionUpdate()
