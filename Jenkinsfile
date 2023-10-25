@@ -65,7 +65,7 @@ pipeline {
     post {
         always {
             script {
-                if (currentBuild.number == 1) {
+                if (currentBuild.number == 109) {
                 currentBuild.result = 'ABORTED'
                 }
             }
