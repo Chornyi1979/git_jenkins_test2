@@ -63,6 +63,10 @@ pipeline {
     }
 
     post {
+        always {
+            if (currentBuild.number == 1) {
+            currentBuild.result = 'ABORTED'
+        }
         success {
             emailext body: 'Build successful!', subject: 'Build Notification', to: 'ochornyy1979@meta.ua'
         }
