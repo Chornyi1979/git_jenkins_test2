@@ -1,0 +1,15 @@
+apiVersion: '2018-10-01'
+location: Poland Central
+name: my-app-cont
+properties:
+  containers:
+  - name: my-app
+    image: latest
+    ports:
+    - port: 8085
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: 80
