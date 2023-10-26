@@ -79,7 +79,28 @@
           </execution>
         </executions>
       </plugin>
-      
+      <plugin>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-webapp-maven-plugin</artifactId>
+        <version>1.14.0</version>
+	<configuration>
+          <auth>
+            <tenantId>${tenant}</tenantId>
+            <clientId>${appId}</clientId>
+            <clientSecret>${password}</clientSecret>
+          </auth>		
+          <deploymentType>docker</deploymentType>
+          <dockerImageName>latest</dockerImageName>
+          <dockerImageTag>latest</dockerImageTag>
+          <resourceGroup>Ch2611</resourceGroup>
+          <appName>my-app-cont</appName>
+          <region>Poland Central</region>
+          <osType>LINUX</osType>
+          <ports>
+            <port>80</port>
+          </ports>
+        </configuration>
+      </plugin> 			
     </plugins>
   </build>
 </project>
