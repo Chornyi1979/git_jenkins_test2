@@ -26,6 +26,11 @@ def buildImage() {
 	}
 }
 
+def deployApp() {
+    withCredentials([azureServicePrincipal('<credentialsId>')]) {
+        sh 'mvn azure-webapp:deploy'
+    }
+}
 
 def commitVersionUpdate() {
 	withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {

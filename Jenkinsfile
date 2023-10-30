@@ -53,6 +53,14 @@ pipeline {
             }
         }
 
+        stage ("deploy") {
+            steps {
+                script {
+                    gv.deployApp()
+                }
+            }   
+        }
+
         stage ("commit GitHub version update") {
             steps {
                 script {
