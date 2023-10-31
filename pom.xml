@@ -90,22 +90,29 @@
             <clientId>${env.CLIENT_ID}</clientId>
             <clientSecret>${env.CLIENT_SECRET}</clientSecret>
           </auth>
-          <deploymentType>docker</deploymentType>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
 	  <region>Poland Central</region>
 	  <appServicePlanName>my-app-service-plan</appServicePlanName>
           <appServicePlanResourceGroup>my-app-service-plan-res-group</appServicePlanResourceGroup>
-          <dockerImageType>Public</dockerImageType>
-	  <imageName>latest</imageName>
-          <imageTag>latest</imageTag>
-	  <runtimeStack>DOCKER|latest:latest</runtimeStack>
-	  <appSettings>
-            <property>
-              <name>PORT</name>
-              <value>80</value>
-            </property>
-          </appSettings>
+          <runtime>
+            <os>linux</os>  
+            <javaVersion>Java 8</javaVersion>
+            <webContainer>Java SE</webContainer>
+	  </runtime>
+          
+      	  <!-- Deployment settings -->
+          <deployment>
+            <resources>
+              <resource>
+                <directory>${project.basedir}/target</directory>
+		
+                <includes>
+                  <include>*.jar</include>
+                </includes>
+              </resource>
+            </resources>
+          </deployment>
         </configuration>
       </plugin> 			
     </plugins>
