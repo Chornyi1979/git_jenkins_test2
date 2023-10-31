@@ -79,26 +79,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>environment-maven-plugin</artifactId>
-        <version>1.0</version>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>set-environment</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <properties>
-            <TENANT_ID>${env.TENANT_ID}</TENANT_ID>
-            <CLIENT_ID>${env.CLIENT_ID}</CLIENT_ID>
-            <CLIENT_SECRET>${env.CLIENT_SECRET}</CLIENT_SECRET>
-          </properties>
-        </configuration>
-      </plugin>
+      
       <plugin>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>azure-webapp-maven-plugin</artifactId>
