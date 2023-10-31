@@ -84,11 +84,12 @@
         <artifactId>azure-webapp-maven-plugin</artifactId>
         <version>1.14.0</version>
 	<configuration>
-          <auth>
-            <tenantId>${tenant}</tenantId>
-            <clientId>${appId}</clientId>
-            <clientSecret>${password}</clientSecret>
-          </auth>		
+	  <authentication>
+            <serverId>MyLabServicePrincipal</serverId>
+            <tenantId>${env.TENANT_ID}</tenantId>
+            <clientId>${env.CLIENT_ID}</clientId>
+            <clientSecret>${env.CLIENT_SECRET}</clientSecret>
+          </authentication>
           <deploymentType>docker</deploymentType>
           <dockerImageName>latest</dockerImageName>
           <dockerImageTag>latest</dockerImageTag>
