@@ -87,9 +87,9 @@
 	<configuration>
 	  <auth>
             <serverId>MyLabServicePrincipal</serverId>
-            <azureTenantId>${env.TENANT_ID}</azureTenantId>
-            <azureClientId>${env.CLIENT_ID}</azureClientId>
-            <azureClientSecret>${env.CLIENT_SECRET}</azureClientSecret>
+            <azureTenantId>${settings.security.get("TENANT_ID")}</azureTenantId>
+            <azureClientId>${settings.security.get("CLIENT_ID")}</azureClientId>
+            <azureClientSecret>${settings.security.get("CLIENT_SECRET")}</azureClientSecret>
           </auth>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
