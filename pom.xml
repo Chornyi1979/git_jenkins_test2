@@ -84,18 +84,21 @@
         <artifactId>azure-webapp-maven-plugin</artifactId>
         <version>2.2.0</version>
 	<configuration>
-	  <authentication>
+	  <auth>
             <serverId>MyLabServicePrincipal</serverId>
             <tenantId>${env.TENANT_ID}</tenantId>
             <clientId>${env.CLIENT_ID}</clientId>
             <clientSecret>${env.CLIENT_SECRET}</clientSecret>
-          </authentication>
+          </auth>
           <deploymentType>docker</deploymentType>
-          <imageName>latest</imageName>
-          <imageTag>latest</imageTag>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
-          <region>Poland Central</region>
+	  <region>Poland Central</region>
+	  <appServicePlanName>my-app-service-plan</appServicePlanName>
+          <appServicePlanResourceGroup>Ch2611</appServicePlanResourceGroup>
+          <dockerImageType>Public</dockerImageType>
+	  <imageName>latest</imageName>
+          <imageTag>latest</imageTag>
 	  <linuxFxVersion>DOCKER|my-docker-image:latest</linuxFxVersion>
 	  <appSettings>
             <property>
