@@ -91,15 +91,18 @@
             <clientSecret>${env.CLIENT_SECRET}</clientSecret>
           </authentication>
           <deploymentType>docker</deploymentType>
-          <dockerImageName>latest</dockerImageName>
-          <dockerImageTag>latest</dockerImageTag>
+          <imageName>latest</imageName>
+          <imageTag>latest</imageTag>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
           <region>Poland Central</region>
-          <osType>LINUX</osType>
-          <ports>
-            <port>80</port>
-          </ports>
+	  <linuxFxVersion>DOCKER|my-docker-image:latest</linuxFxVersion>
+	  <appSettings>
+            <property>
+              <name>PORT</name>
+              <value>80</value>
+            </property>
+          </appSettings>
         </configuration>
       </plugin> 			
     </plugins>
