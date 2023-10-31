@@ -1,11 +1,7 @@
 def gv
 pipeline {
     agent any
-    environment {
-        TENANT_ID = credentials('Tenant ID')
-        CLIENT_ID = credentials('Client ID')
-        CLIENT_SECRET = credentials('Client Secret')
-    }
+   
     tools {
         maven 'maven-3.9'	
     }
