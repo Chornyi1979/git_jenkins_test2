@@ -86,9 +86,9 @@
 	<configuration>
 	  <auth>
             <serverId>MyLabServicePrincipal</serverId>
-            <tenantId>${env.TENANT_ID}</tenantId>
-            <clientId>${env.CLIENT_ID}</clientId>
-            <clientSecret>${env.CLIENT_SECRET}</clientSecret>
+            <tenantId>${env.Tenant ID}</tenantId>
+            <clientId>${env.Client ID}</clientId>
+            <clientSecret>${env.Client Secret}</clientSecret>
           </auth>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
