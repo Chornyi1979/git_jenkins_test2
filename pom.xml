@@ -80,6 +80,18 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>io.github.cdimascio</groupId>
+        <artifactId>dotenv-maven-plugin</artifactId>
+        <version>2.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>dotenv</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>azure-webapp-maven-plugin</artifactId>
         <version>2.2.0</version>
