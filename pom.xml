@@ -92,7 +92,7 @@
           <appServicePlanResourceGroup>my-app-service-plan-res-group</appServicePlanResourceGroup>
           <runtime>
             <os>linux</os>  
-            <javaVersion>Java 8</javaVersion>
+            <javaVersion>Java 17</javaVersion>
             <webContainer>Java SE</webContainer>
 	  </runtime>
           
