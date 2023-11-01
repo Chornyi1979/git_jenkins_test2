@@ -72,7 +72,7 @@ pipeline {
         stage('Healthcheck') {
             steps {
                 script {
-                    gv.healthcheck(env.WEB_APP_URL)
+                    gv.healthcheck()
                 }
             }
         }

@@ -33,7 +33,7 @@ def deployApp() {
 }
 
 def healthcheck(url) {
-    def response = sh(script: "curl -s -o /dev/null -w '%{http_code}' ${url}/healthcheck", returnStdout: true).trim()
+    def response = sh(script: "curl -s -o /dev/null -w '%{http_code}' https://my-app-cont.azurewebsites.net/healthcheck", returnStdout: true).trim()
     if (response == '200') {
         echo "Healthcheck passed"
     } else {
