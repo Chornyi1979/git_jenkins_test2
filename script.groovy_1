@@ -32,6 +32,15 @@ def deployApp() {
     }
 }
 
+def healthcheck(url) {
+    def response = sh(script: "curl -s -o /dev/null -w '%{http_code}' ${url}/healthcheck", returnStdout: true).trim()
+    if (response == '200') {
+        echo "Healthcheck passed"
+    } else {
+        error "Healthcheck failed with response code ${response}"
+    }
+}
+
 def commitVersionUpdate() {
 	withCredentials([usernamePassword(credentialsId: 'GitHub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
 		sh 'git config --global user.email "jenkins@example.com"'

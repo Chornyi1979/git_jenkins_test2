@@ -60,6 +60,21 @@ pipeline {
                     gv.deployApp()
                 }
             }   
+            post {
+                success {
+                    script {
+                        env.WEB_APP_URL = "http://<your-web-app-url>"
+                    }
+                }
+            }
+        }
+
+        stage('Healthcheck') {
+            steps {
+                script {
+                    gv.healthcheck(env.WEB_APP_URL)
+                }
+            }
         }
 
         stage ("commit GitHub version update") {
