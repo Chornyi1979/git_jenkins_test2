@@ -87,7 +87,7 @@
 	<configuration>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
-	  <region>Poland Central</region>
+	  <region>westeurope</region>
 	  <appServicePlanName>my-app-service-plan</appServicePlanName>
           <appServicePlanResourceGroup>my-app-service-plan-res-group</appServicePlanResourceGroup>
           <runtime>
