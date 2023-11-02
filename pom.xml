@@ -92,8 +92,8 @@
           <appServicePlanResourceGroup>my-app-service-plan-res-group</appServicePlanResourceGroup>
           <runtime>
             <os>linux</os>  
-            <javaVersioin>Java 11</javaVersion>
-	    <webContainer>Java SE</webContainer>
+            <javaVersion>Java 8</javaVersion>
+            <webContainer>Java SE</webContainer>
 	  </runtime>
           
       	  <!-- Deployment settings -->
