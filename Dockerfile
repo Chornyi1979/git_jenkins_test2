@@ -1,9 +1,9 @@
 FROM openjdk:8-jre-alpine
 
-EXPOSE 8080
+EXPOSE 80
 COPY ./target/my-app-*.jar /usr/app/
 WORKDIR /usr/app
 
-CMD java -jar my-app-*.jar
+CMD java -jar -Dserver.port=80 my-app-*.jar
 
 
