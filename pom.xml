@@ -93,8 +93,7 @@
           <runtime>
             <os>linux</os>  
             <javaVersion>Java 8</javaVersion>
-	    <webContainer>Docker</webContainer>
-	    <image>chornyi1979/my-repo:latest</image>
+	    <webContainer>Java SE</webContainer>
 	  </runtime>
           
       	  <!-- Deployment settings -->
