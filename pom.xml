@@ -93,7 +93,7 @@
           <runtime>
             <os>linux</os>  
             <javaVersion>Java 8</javaVersion>
-	    <webContainer>None</webContainer>
+	    <webContainer>Java 8</webContainer>
 	    <image>chornyi1979/my-repo:latest</image>
 	  </runtime>
           <deployment>
