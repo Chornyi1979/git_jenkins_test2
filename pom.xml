@@ -93,10 +93,19 @@
           <runtime>
             <os>linux</os>  
             <javaVersion>Java 8</javaVersion>
-	    <webContainer>Tomcat 9.0</webContainer>
+	    <webContainer>None</webContainer>
 	    <image>chornyi1979/my-repo:latest</image>
 	  </runtime>
-          
+          <deployment>
+            <resources>
+                <resource>
+                    <directory>${project.basedir}/target</directory>
+                    <includes>
+                        <include>*.jar</include>
+                    </includes>
+                </resource>
+            </resources>
+          </deployment>
       	 
         </configuration>
       </plugin> 			
