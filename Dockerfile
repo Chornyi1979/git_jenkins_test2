@@ -1,9 +1,5 @@
-FROM openjdk:8-jre-alpine
+FROM tomcat:9.0-jdk8-openjdk-slim
 
-EXPOSE 80
-COPY ./target/my-app-*.jar /usr/app/
-WORKDIR /usr/app
-
-CMD java -jar -Dserver.port=80 my-app-*.jar
+COPY ./target/my-app-*.war /usr/local/tomcat/webapps/my-app.war
 
 
