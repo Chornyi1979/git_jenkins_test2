@@ -64,7 +64,10 @@ pipeline {
 
         stage('Healthcheck') {
             steps {
-                echo "Not Done"
+                script {
+                    gv.healthcheck() 
+                    echo "Not Done"
+                }
             }
         }
 
