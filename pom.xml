@@ -121,9 +121,18 @@
             <os>linux</os>  
             <javaVersion>Java 8</javaVersion>
 	    <webContainer>Tomcat 9.0</webContainer>
-	    <image>chornyi1979/my-repo:1.1.46-*</image>
+	    <image>chornyi1979/my-repo:${docker.image.tag}</image>
 	  </runtime>
-         
+          <deployment>
+            <resources>
+              <resource>
+                <directory>${project.basedir}/target</directory>
+                <includes>
+                  <include>*.war</include>
+                </includes>
+              </resource>
+            </resources>
+          </deployment>
         </configuration>
       </plugin> 			
     </plugins>
