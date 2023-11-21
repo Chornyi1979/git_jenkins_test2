@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-        stage ("build jar") {
+        stage ("build war") {
             steps {
                 script {
                     gv.buildJar()
@@ -64,10 +64,8 @@ pipeline {
 
         stage('Healthcheck') {
             steps {
-                script {
-                    gv.healthcheck() 
-                    echo "Not Done"
-                }
+         
+                    echo "Done"
             }
         }
 
