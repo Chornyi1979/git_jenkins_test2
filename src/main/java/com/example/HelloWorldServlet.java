@@ -15,7 +15,7 @@ public class HelloWorldServlet extends HttpServlet {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
             // Обробка виключень
-            logger.log("Помилка при обробці запиту: ");
+            System.out.println("Помилка при обробці запиту: ");
         }
     }
 }
