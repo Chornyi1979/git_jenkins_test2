@@ -6,16 +6,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-@SuppressWarnings("squid:S2187")
+
 public class HelloWorldServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("message", "Hello, World!");
         try {
-            request.setAttribute("message", "Hello, World!");    
             request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } catch (ServletException | IOException e) {
-            // Обробка виключень
+        } catch (ServletException e) {
+            // Обробка виключення ServletException
+            e.printStackTrace();
+        } catch (IOException e) {
+            // Обробка виключення IOException
+            e.printStackTrace();
         }
     }
 }
