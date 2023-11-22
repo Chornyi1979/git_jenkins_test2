@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-
+@SuppressWarnings("squid:S2187")
 public class HelloWorldServlet extends HttpServlet {
 
     @Override
