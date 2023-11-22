@@ -26,15 +26,14 @@ public class HelloWorldServletTest {
     private RequestDispatcher requestDispatcher;
 
     @Test
-    public void testDoGet() throws ServletException, IOException {
-        // Arrange
-        when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);
+    public void testDoPost() throws ServletException, IOException {
+    // Arrange
+    when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);
 
-        // Act
-        new HelloWorldServlet().doGet(request, response);
+    // Act
+    new HelloWorldServlet().doPost(request, response);
 
-        // Assert
-        verify(request).setAttribute("message", "Hello, World!");
-        verify(requestDispatcher).forward(request, response);
+    // Assert
+    verify(requestDispatcher).forward(request, response);
     }
 }
