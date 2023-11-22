@@ -6,18 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class HelloWorldServletTest {
-
-    @Test
-    public void test() {
-        // Пустий тестовий метод
-    }
-}
 
 public class HelloWorldServlet extends HttpServlet {
 
