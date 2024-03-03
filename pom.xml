@@ -127,6 +127,11 @@
         <artifactId>azure-webapp-maven-plugin</artifactId>
         <version>2.2.0</version>
 	<configuration>
+	  <authType>SP</authType>
+          <subscriptionId>${AZURE_SUBSCRIPTION_ID}</subscriptionId>
+          <clientId>${CLIENT_ID}</clientId>
+          <clientSecret>${CLIENT_SECRET}</clientSecret>
+          <tenantId>${TENANT_ID}</tenantId>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
 	  <region>westeurope</region>
