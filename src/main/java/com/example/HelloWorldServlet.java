@@ -10,6 +10,7 @@ import java.io.IOException;
 public class HelloWorldServlet extends HttpServlet {
 
     @Override
+    @SuppressWarnings("squid:S2699")
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
