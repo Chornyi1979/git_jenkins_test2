@@ -125,14 +125,13 @@
       <plugin>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>azure-webapp-maven-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>2.2.0</version>
 	<configuration>
 	  <auth>
-            <type>service_principal</type>
-            <subscriptionId>${AZURE_SUBSCRIPTION_ID}</subscriptionId>
-            <clientId>${CLIENT_ID}</clientId>
-            <clientSecret>${CLIENT_SECRET}</clientSecret>
-            <tenantId>${TENANT_ID}</tenantId>
+            <client>${CLIENT_ID}</client>
+            <key>${CLIENT_SECRET}</key>
+	    <tenant>${TENANT_ID}</tenant>
+	    <environment>azure</environment>
 	  </auth>
           <resourceGroup>Ch2611</resourceGroup>
           <appName>my-app-cont</appName>
