@@ -5,3 +5,5 @@ test for merge
 NEW COMMIT 04.03
 NEXT COMMIT
 LAST
+LAST2
+
