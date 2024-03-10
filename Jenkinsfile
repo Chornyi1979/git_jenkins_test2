@@ -54,19 +54,7 @@ pipeline {
             }
         }
 
-       # stage ("deploy") {
-       #     steps {
-       #         script {
-       #             gv.deployApp()
-       #         }
-       #     }   
-       # }
 
-       # stage('Healthcheck') {
-       #     steps {
-       #         echo "Not Done"
-       #     }
-       # }
 
         stage ("commit GitHub version update") {
             steps {
