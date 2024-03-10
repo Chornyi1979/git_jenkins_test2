@@ -56,8 +56,8 @@ pipeline {
 
         stage ("deploy") {
             when {
-                not {
-                    branch 'dev'
+                expression {
+                    return !BRANCH_NAME.equals('dev')
                 }
             }
             steps {
@@ -69,9 +69,10 @@ pipeline {
 
         stage('Healthcheck') {
             when {
-                not {
-                    branch 'dev'
+                expression {
+                    return !BRANCH_NAME.equals('dev')
                 }
+
             }
             steps {
                 script {
