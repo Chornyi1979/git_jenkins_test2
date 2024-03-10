@@ -55,6 +55,11 @@ pipeline {
         }
 
         stage ("deploy") {
+            when {
+                not {
+                    branch 'dev'
+                }
+            }
             steps {
                 script {
                     gv.deployApp()
@@ -63,6 +68,11 @@ pipeline {
         }
 
         stage('Healthcheck') {
+            when {
+                not {
+                    branch 'dev'
+                }
+            }
             steps {
                 script {
                     gv.healthcheck()
