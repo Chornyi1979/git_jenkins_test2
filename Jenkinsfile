@@ -55,11 +55,6 @@ pipeline {
         }
 
         stage ("deploy") {
-            when {
-                expression {
-                    return BRANCH_NAME != 'dev'
-                }
-            }
             steps {
                 script {
                     gv.deployApp()
@@ -68,12 +63,6 @@ pipeline {
         }
 
         stage('Healthcheck') {
-            when {
-                expression {
-                    return BRANCH_NAME != 'dev'
-                }
-
-            }
             steps {
                 script {
                     gv.healthcheck()
