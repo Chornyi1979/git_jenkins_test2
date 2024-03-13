@@ -22,37 +22,6 @@ pipeline {
             }
         }
 
-        stage('Static code analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
-
-        stage ("increment version") {
-            steps {
-                script{
-                    gv.incrementVersion()
-                }
-            }
-        }
-
-        stage ("build war") {
-            steps {
-                script {
-                    gv.buildJar()
-                }
-            }
-        }
-
-        stage ("build docker images") {
-            steps {
-                script {
-                    gv.buildImage()
-                }
-            }
-        }
 
         stage ("deploy") {
             steps {
@@ -71,14 +40,6 @@ pipeline {
             }
         }
 
-        stage ("commit GitHub version update") {
-            steps {
-                script {
-                    gv.commitVersionUpdate()
-                }
-            }   
-        }
-    }
 
     post {
 

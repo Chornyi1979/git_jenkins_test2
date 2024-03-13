@@ -138,12 +138,12 @@
 	  <region>westeurope</region>
 	  <pricingTier>B2</pricingTier>
 	  <appServicePlanName>my-app-service-plan</appServicePlanName>
-          <appServicePlanResourceGroup>my-app-service-plan-res-group</appServicePlanResourceGroup>
+	  <appServicePlanResourceGroup>Ch2611</appServicePlanResourceGroup>
           <runtime>
             <os>linux</os>  
             <javaVersion>Java 8</javaVersion>
 	    <webContainer>Tomcat 9.0</webContainer>
-	    <image>chornyi1979/my-repo:${docker.image.tag}</image>
+	    <image>chornyi1979/my-repo:latest</image>
 	  </runtime>
           <deployment>
             <resources>
