@@ -7,9 +7,7 @@ pipeline {
     }
 
     parameters {
-        extendedChoice(name: 'VERSION', description: 'Select the version to deploy', type: 'PT_SINGLE_SELECT', groovyScript: {
-            return getAvailableVersions()
-        })
+        choice(name: 'VERSION', choices: [], description: 'Select the version to deploy')
     }
 
 
