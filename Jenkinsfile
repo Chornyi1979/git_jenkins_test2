@@ -7,22 +7,9 @@ pipeline {
     }
 
     parameters {
-        activeChoiceReactiveParam('VERSION') {
-            description('Select the version to deploy')
-            choiceType('PT_SINGLE_SELECT')
-            groovyScript {
-                script("""
-                    def versions = []
-                    def url = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags/?page_size=100'
-                    def response = new URL(url).text
-                    def json = new groovy.json.JsonSlurper().parseText(response)
-                    json.results.each { tag ->
-                        versions.add(tag.name)
-                    }
-                    return versions
-                """)
-            }
-        }
+        extendedChoice(name: 'VERSION', description: 'Select the version to deploy', type: 'PT_SINGLE_SELECT', groovyScript: {
+            return getAvailableVersions()
+        })
     }
 
 
