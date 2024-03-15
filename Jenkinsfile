@@ -6,9 +6,7 @@ pipeline {
         maven 'maven-3.9'	
     }
 
-    parameters {
-        choice(name: 'VERSION', choices: [], description: 'Select the version to deploy')
-    }
+    
 
 
     stages {
