@@ -27,6 +27,15 @@ pipeline {
             }
         }
 
+        stage("Get Available Versions") {
+            steps {
+                script {
+                    def versions = gv.getAvailableVersions()
+                    params.VERSION.choices = versions
+                }
+            }
+        }
+
 
         stage ("deploy") {
             steps {
