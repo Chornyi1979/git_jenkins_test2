@@ -2,8 +2,10 @@ def getAvailableVersions() {
     def versions = []
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh "docker search chornyi1979/my-repo --format '{{.Tag}}'" , returnStdout: true | readVersions
-        versions = readVersions.trim().split('\n')
+        def command = "docker search chornyi1979/my-repo --format '{{.Tag}}'"
+        def process = command.execute()
+        process.waitFor()
+        versions = process.text.trim().split('\n')
     }
     return versions
 }
