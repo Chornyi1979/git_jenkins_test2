@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def versions = gv.getAvailableVersions()
-                    params.VERSION.choices = versions
+                    params.VERSION.setChoices = versions
                 }
             }
         }
