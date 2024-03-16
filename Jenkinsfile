@@ -32,20 +32,24 @@ pipeline {
                   def versions = []
                   withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh "docker images chornyi1979/my-repo"
-                    def process = sh(script: 'docker images chornyi1979/my-repo', returnStdout: true)
-                    versions = process.text.trim().split('\n')
+                    def process = sh(script: 'docker pull chornyi1979/my-repo --all-tags', returnStdout: true)
+                    def output = process.text.trim().split('\n')
+                    output = output[1..-1] // Удаляем первую строку с заголовками
+                    output.each { line ->
+                      def parts = line.split(/\s+/)
+                      versions.add(parts[1])
+                      }
+                    }
+                    def versionParam = input(
+                      id: 'versionInput',
+                      message: 'Select version',
+                      parameters: [
+                          choice(choices: versions, description: 'Select version', name: 'VERSION')
+                      ]
+                    )
+                    env.VERSION = versionParam
                   }
-                  def versionParam = input(
-                    id: 'versionInput',
-                    message: 'Select version',
-                    parameters: [
-                        choice(choices: versions, description: 'Select version', name: 'VERSION')
-                    ]
-                  )
-                  env.VERSION = versionParam
-                }
-            }  
+            }
         }
 
 
