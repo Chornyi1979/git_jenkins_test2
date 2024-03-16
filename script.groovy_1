@@ -3,10 +3,12 @@ def getAvailableVersions() {
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "echo $PASS | docker login -u $USER --password-stdin"
         def command = "docker images chornyi1979/my-repo"
-        def process = sh(script: command, returnStdout: true)
-        versions = process.text.trim().split('\n')
-    }
-    return versions
+        def images = sh(script: command, returnStdout: true).trim().split('\n')
+
+// Вывод списка образов
+for (image in images) {
+    echo image
+}
 }
 
 
