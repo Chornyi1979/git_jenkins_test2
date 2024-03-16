@@ -34,7 +34,7 @@ pipeline {
               def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
               def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
               echo "Response: ${response}"
-              def json = jsonParse(text: response)
+              def json = readJSON library: 'json-utils', text: response
               if (json.results) {
                 json.results.each { result ->
                   def name = result.name
