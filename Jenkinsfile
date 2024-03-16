@@ -32,6 +32,7 @@ pipeline {
                   def versions = []
                   withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh "ls"
                     def process = sh(script: 'docker images chornyi1979/my-repo', returnStdout: true)
                     def output = process.text.trim().split('\n')
                     output = output[1..-1] // Удаляем первую строку с заголовками
