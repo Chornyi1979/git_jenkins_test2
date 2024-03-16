@@ -32,7 +32,8 @@ pipeline {
                   def versions = []
                   withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    def process = sh(script: 'docker images chornyi1979/my-repo --format "{{.Tag}}"', returnStdout: true)
+                    sh "docker images chornyi1979/my-repo"
+                    def process = sh(script: 'docker images chornyi1979/my-repo', returnStdout: true)
                     versions = process.text.trim().split('\n')
                   }
                   def versionParam = input(
