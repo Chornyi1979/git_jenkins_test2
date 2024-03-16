@@ -37,9 +37,9 @@ def buildImage() {
 	}
 }
 
-def deployApp() {
+def deployApp(String version) {
     withCredentials([azureServicePrincipal(credentialsId: 'MyLabServicePrincipal', tenantIdVariable: 'TENANT_ID', clientIdVariable: 'CLIENT_ID', clientSecretVariable: 'CLIENT_SECRET')]) {
-        sh 'mvn azure-webapp:deploy'
+        sh 'mvn azure-webapp:deploy -Dversion=${version}'
     }
 }
 
