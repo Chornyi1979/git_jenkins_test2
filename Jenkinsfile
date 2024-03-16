@@ -28,9 +28,9 @@ pipeline {
         stage("Get Available Versions") {
             steps {
                 script {
-                    def versions
-                    versions = gv.getAvailableVersions()
-                    params.VERSION.сhoices = versions
+                    def versions = gv.getAvailableVersions()
+                    def versionParam = choice(choices: versions, description: 'Select version', name: 'VERSION')
+                    env.VERSION = versionParam
                 }
             }
         }
