@@ -5,10 +5,10 @@ def getAvailableVersions() {
         def command = "docker images chornyi1979/my-repo"
         def images = sh(script: command, returnStdout: true).trim().split('\n')
 
-// Вывод списка образов
-for (image in images) {
-    echo image
-}
+        // Вывод списка образов
+        for (image in images) {
+          echo image
+        }
 }
 
 
