@@ -35,7 +35,7 @@ pipeline {
               def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
               echo "Response: ${response}"
               def json = readJSON(text: response)
-              if (json.responce.results) {
+              if (json.response.results) {
                 json.results.each { result ->
                   def name = result.name
                   versions.add(name)
