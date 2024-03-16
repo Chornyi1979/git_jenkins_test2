@@ -3,7 +3,8 @@ pipeline {
     agent any
    
     tools {
-        maven 'maven-3.9'	
+        maven 'maven-3.9'
+        dockerTool 'docker'
     }
 
     
@@ -28,11 +29,22 @@ pipeline {
         stage("Get Available Versions") {
             steps {
                 script {
-                    def versions = gv.getAvailableVersions()
-                    def versionParam = choice(choices: versions, description: 'Select version', name: 'VERSION')
-                    env.VERSION = versionParam
+                  def versions = []
+                  withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    def process = sh(script: 'docker search chornyi1979/my-repo --format "{{.Tag}}"', returnStdout: true)
+                    versions = process.text.trim().split('\n')
+                  }
+                  def versionParam = input(
+                    id: 'versionInput',
+                    message: 'Select version',
+                    parameters: [
+                        choice(choices: versions, description: 'Select version', name: 'VERSION')
+                    ]
+                  )
+                  env.VERSION = versionParam
                 }
-            }
+            }  
         }
 
 
