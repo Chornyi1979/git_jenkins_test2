@@ -83,7 +83,7 @@ pipeline {
                             choice(choices: versions, description: 'Select version', name: 'VERSION')
                         ]
                     )
-                    deployApp(selectedVersion)
+                    deployApp(version)
                 }
             }
         }
