@@ -73,12 +73,19 @@ pipeline {
         }
 
 
-        stage ("deploy") {
+        stage("Deploy App") {
             steps {
                 script {
-                    gv.deployApp()
+                    def selectedVersion = input(
+                        id: 'versionInput',
+                        message: 'Select version',
+                        parameters: [
+                            choice(choices: versions, description: 'Select version', name: 'VERSION')
+                        ]
+                    )
+                    deployApp(selectedVersion)
                 }
-            }   
+            }
         }
 
         stage('Healthcheck') {
