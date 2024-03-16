@@ -26,7 +26,6 @@ pipeline {
             }
         }
 
-        import groovy.json.JsonSlurper
 
         stage("Get Available Versions") {
           steps {
