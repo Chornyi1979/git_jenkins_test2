@@ -4,7 +4,7 @@ def getAvailableVersions() {
         sh "echo $PASS | docker login -u $USER --password-stdin"
         def command = "docker images chornyi1979/my-repo"
         def process = sh(script: command, returnStdout: true)
-        versions = versions = process.tokenize('\n').drop(1).collect { it.split()[1] }
+        versions = latest
     }
     return versions
 }
