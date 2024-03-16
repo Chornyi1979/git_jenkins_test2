@@ -33,8 +33,7 @@ pipeline {
               def versions = []
               def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
               def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-              def jsonSlurper = new JsonSlurper()
-              def json = jsonSlurper.parseText(response)
+              def json = readJSON(text: response)
               json.results.each { result ->
                 versions.add(result.name)
               }
