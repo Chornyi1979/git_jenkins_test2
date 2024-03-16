@@ -49,7 +49,7 @@ pipeline {
                     )
                     env.VERSION = versionParam
                   }
-            }
+             }
         }
 
 
