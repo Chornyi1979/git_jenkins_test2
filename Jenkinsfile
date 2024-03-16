@@ -33,22 +33,33 @@ pipeline {
               def versions = []
               def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
               def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-              echo "Response: ${response}"
               def json = readJSON(text: response)
               json.results.each { result ->
-                versions.add(result.name)
+                def image = "chornyi1979/my-repo:${result.name}"
+                versions.add(image)
               }
-              def versionParam = input(
+              // Теперь у вас есть список доступных образов
+              // Вы можете использовать этот список для выбора нужной версии образа
+              echo "Available Versions: ${versions}"
+              
+              // Здесь вы можете добавить логику для выбора нужной версии образа
+              // Например, используйте input для выбора версии образа
+              def selectedVersion = input(
                 id: 'versionInput',
                 message: 'Select version',
                 parameters: [
                   choice(choices: versions, description: 'Select version', name: 'VERSION')
                 ]
               )
-              env.VERSION = versionParam
+              
+              // Теперь у вас есть выбранная версия образа
+              echo "Selected Version: ${selectedVersion}"
+              
+              // Здесь вы можете продолжить с загрузкой выбранной версии образа на ваше окружение
+              sh "docker pull ${selectedVersion}"
             }
           }
-        }              
+        }      
 
 
         stage ("deploy") {
