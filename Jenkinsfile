@@ -6,6 +6,10 @@ pipeline {
         maven 'maven-3.9'	
     }
 
+    triggers {
+        changeRequest()
+    }
+
     stages {
 
         stage ("init") {
