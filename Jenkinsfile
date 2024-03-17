@@ -54,7 +54,6 @@ pipeline {
                 gv.deployApp(selectedVersion)
                 echo "Selected Version: ${selectedVersion}"
                 
-                sh "docker pull chornyi1979/my-repo:${selectedVersion}"
               } else {
                 error "Failed to retrieve available versions."
               }
