@@ -76,7 +76,8 @@ pipeline {
         stage ("deploy") {
             steps {
                 script {
-                    gv.deployApp()
+                    def selectedVersion = sh(script: "cat version.txt", returnStdout: true).trim()
+                    gv.deployApp(selectedVersion)
                 }
             }   
         }	
