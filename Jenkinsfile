@@ -1,6 +1,14 @@
 def gv
 pipeline {
     agent any
+
+    parameters {
+        choice(
+            choices: ['test', 'preprod', 'prod'],
+            description: 'Select the environment to deploy',
+            name: 'ENVIRONMENT'
+        )
+    }
    
     tools {
         maven 'maven-3.9'
