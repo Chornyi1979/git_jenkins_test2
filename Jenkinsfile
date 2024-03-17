@@ -1,6 +1,10 @@
 def gv
 pipeline {
     agent any
+
+    triggers {
+        changeRequest()
+    }
    
     tools {
         maven 'maven-3.9'	
