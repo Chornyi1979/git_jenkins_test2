@@ -37,10 +37,11 @@ def buildImage() {
 	}
 }
 
-def deployApp() {
+def deployApp(selectedVersion) {
     withCredentials([azureServicePrincipal(credentialsId: 'MyLabServicePrincipal', tenantIdVariable: 'TENANT_ID', clientIdVariable: 'CLIENT_ID', clientSecretVariable: 'CLIENT_SECRET')]) {
+        
         sh "docker pull chornyi1979/my-repo:${selectedVersion}"
-       
+        sh "mvn azure-webapp:deploy -Dimage=chornyi1979/my-repo:${selectedVersion}"
     }
 }
 
