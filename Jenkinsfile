@@ -62,7 +62,7 @@ pipeline {
                 
                 // Теперь у вас есть выбранная версия образа
                 echo "Selected Version: ${selectedVersion}"
-                
+                gv.deployApp(selectedVersion)
                 // Здесь вы можете продолжить с загрузкой выбранной версии образа на ваше окружение
                 sh "docker pull chornyi1979/my-repo:${selectedVersion}"
               } else {
@@ -76,7 +76,7 @@ pipeline {
         stage ("deploy") {
             steps {
                 script {
-                    def selectedVersion = sh(script: "cat version.txt", returnStdout: true).trim()
+                
                     gv.deployApp(selectedVersion)
                 }
             }   
