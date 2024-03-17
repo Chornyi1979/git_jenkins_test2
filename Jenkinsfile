@@ -59,7 +59,7 @@ pipeline {
                     echo "Invalid version selected. Please select a valid version."
                   }
                 }
-                
+                gv.deployApp(selectedVersion)
                 // Теперь у вас есть выбранная версия образа
                 echo "Selected Version: ${selectedVersion}"
                 
@@ -73,14 +73,7 @@ pipeline {
         }
 
 
-        stage ("deploy") {
-            steps {
-                script {
-                
-                    gv.deployApp(selectedVersion)
-                }
-            }   
-        }	
+        
 
         stage('Healthcheck') {
             steps {
