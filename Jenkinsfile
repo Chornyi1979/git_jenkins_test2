@@ -7,9 +7,6 @@ pipeline {
         dockerTool 'docker'
     }
 
-    
-
-
     stages {
 
         stage ("init") {
@@ -26,8 +23,7 @@ pipeline {
             }
         }
 
-
-        stage("Get Available Versions") {
+        stage("Choice Versions and Deploy") {
           steps {
             script {
               def versions = []
@@ -40,12 +36,8 @@ pipeline {
                   def name = result.name
                   versions.add(name)
                 }
-                // Теперь у вас есть список доступных версий образов
-                // Вы можете использовать этот список для выбора нужной версии образа
                 echo "Available Versions: ${versions}"
                 
-                // Здесь вы можете добавить логику для выбора нужной версии образа
-                // Например, используйте input для выбора версии образа
                 def selectedVersion = null
                 while (selectedVersion == null || !versions.contains(selectedVersion)) {
                   selectedVersion = input(
@@ -60,10 +52,8 @@ pipeline {
                   }
                 }
                 gv.deployApp(selectedVersion)
-                // Теперь у вас есть выбранная версия образа
                 echo "Selected Version: ${selectedVersion}"
                 
-                // Здесь вы можете продолжить с загрузкой выбранной версии образа на ваше окружение
                 sh "docker pull chornyi1979/my-repo:${selectedVersion}"
               } else {
                 error "Failed to retrieve available versions."
@@ -71,8 +61,6 @@ pipeline {
             }
           }
         }
-
-
         
 
         stage('Healthcheck') {
