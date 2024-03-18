@@ -8,33 +8,27 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-        extendedChoice(
-            name: 'VERSION',
+        string(
+            defaultValue: '',
             description: 'Select version',
-            type: 'PT_SINGLE_SELECT',
-            visibleItemCount: 5,
-            multiSelectDelimiter: ',',
-            groovyScript: [
-                classpath: [],
-                sandbox: false,
-                script: '''
-                    def versions = []
-                    def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                    
-                    def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-                    def json = readJSON text: response
-                    if (json.results) {
-                        json.results.each { result ->
-                            def name = result.name
-                            versions.add(name)
-                        }
+            name: 'VERSION',
+            script: {
+                def versions = []
+                def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
+                
+                def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
+                def json = new groovy.json.JsonSlurper().parseText(response)
+                if (json.results) {
+                    json.results.each { result ->
+                        def name = result.name
+                        versions.add(name)
                     }
-                    return versions
-                '''
-            ]
+                }
+                
+                return versions
+            }
         )
-    }
-    
+    }  
    
     tools {
         maven 'maven-3.9'
