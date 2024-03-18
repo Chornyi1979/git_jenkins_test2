@@ -33,7 +33,7 @@ pipeline {
 
         stage("Choice Versions and Deploy") {
           steps {
-            withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {           
+            withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'TOKEN')]) {           
                 script {
                   def versions = []
                   def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
