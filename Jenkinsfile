@@ -8,6 +8,11 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
+        choice(
+            choices: gv.getVersions(),
+            description: 'Select version',
+            name: 'VERSION'
+        )
     }
    
     tools {
@@ -50,13 +55,8 @@ pipeline {
                     
                     def selectedVersion = null
                     while (selectedVersion == null || !versions.contains(selectedVersion)) {
-                      selectedVersion = input(
-                        id: 'versionInput',
-                        message: 'Select version',
-                        parameters: [
-                          choice(choices: versions, description: 'Select version', name: 'VERSION')
-                        ]
-                      )
+                      selectedVersion = params.VERSION
+                        
                       if (!versions.contains(selectedVersion)) {
                         echo "Invalid version selected. Please select a valid version."
                       }
