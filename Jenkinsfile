@@ -33,7 +33,7 @@ pipeline {
 
         stage("Choice Versions and Deploy") {
           steps {
-            withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])              
+            withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {             
                 script {
                   def versions = []
                   def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
@@ -68,6 +68,7 @@ pipeline {
                     error "Failed to retrieve available versions."
                   }
                 }
+            }
           }
         }
         
