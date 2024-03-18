@@ -8,26 +8,8 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-        string(
-            defaultValue: '',
-            description: 'Select version',
-            name: 'VERSION',
-            script: {
-                def versions = []
-                def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                
-                def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-                def json = new groovy.json.JsonSlurper().parseText(response)
-                if (json.results) {
-                    json.results.each { result ->
-                        def name = result.name
-                        versions.add(name)
-                    }
-                }
-                
-                return versions
-            }
-        )
+       
+         
     }  
    
     tools {
@@ -70,7 +52,13 @@ pipeline {
                     
                     def selectedVersion = null
                     while (selectedVersion == null || !versions.contains(selectedVersion)) {
-                      selectedVersion = params.VERSION
+                      selectedVersion = input(
+                        id: 'versionInput',
+                        message: 'Select version',
+                        parameters: [
+                          choice(choices: versions, description: 'Select version', name: 'VERSION')
+                        ]
+                      )
                         
                       if (!versions.contains(selectedVersion)) {
                         echo "Invalid version selected. Please select a valid version."
