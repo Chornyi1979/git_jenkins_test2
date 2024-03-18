@@ -33,40 +33,41 @@ pipeline {
 
         stage("Choice Versions and Deploy") {
           steps {
-            script {
-              def versions = []
-              def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-              def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-              echo "Response: ${response}"
-              def json = readJSON text: response
-              if (json.results) {
-                json.results.each { result ->
-                  def name = result.name
-                  versions.add(name)
-                }
-                echo "Available Versions: ${versions}"
-                
-                def selectedVersion = null
-                while (selectedVersion == null || !versions.contains(selectedVersion)) {
-                  selectedVersion = input(
-                    id: 'versionInput',
-                    message: 'Select version',
-                    parameters: [
-                      choice(choices: versions, description: 'Select version', name: 'VERSION')
-                    ]
-                  )
-                  if (!versions.contains(selectedVersion)) {
-                    echo "Invalid version selected. Please select a valid version."
+            withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])              
+                script {
+                  def versions = []
+                  def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
+                  def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
+                  echo "Response: ${response}"
+                  def json = readJSON text: response
+                  if (json.results) {
+                    json.results.each { result ->
+                      def name = result.name
+                      versions.add(name)
+                    }
+                    echo "Available Versions: ${versions}"
+                    
+                    def selectedVersion = null
+                    while (selectedVersion == null || !versions.contains(selectedVersion)) {
+                      selectedVersion = input(
+                        id: 'versionInput',
+                        message: 'Select version',
+                        parameters: [
+                          choice(choices: versions, description: 'Select version', name: 'VERSION')
+                        ]
+                      )
+                      if (!versions.contains(selectedVersion)) {
+                        echo "Invalid version selected. Please select a valid version."
+                      }
+                    }
+                    gv.deployApp(selectedVersion)
+                    echo "Selected Version: ${selectedVersion}"
+                    sh "docker pull chornyi1979/my-repo:${selectedVersion}"
+                      
+                  } else {
+                    error "Failed to retrieve available versions."
                   }
                 }
-                gv.deployApp(selectedVersion)
-                echo "Selected Version: ${selectedVersion}"
-                sh "docker pull chornyi1979/my-repo:${selectedVersion}"
-                  
-              } else {
-                error "Failed to retrieve available versions."
-              }
-            }
           }
         }
         
