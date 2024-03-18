@@ -37,7 +37,7 @@ pipeline {
                 script {
                   def versions = []
                   def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                  def credentials = usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')
+                  
                   def response = sh(script: "curl -s -u ${credentials.username}:${credentials.password} ${apiUrl}", returnStdout: true)
                   echo "Response: ${response}"
                   def json = readJSON text: response
