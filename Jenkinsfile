@@ -11,7 +11,7 @@ pipeline {
         activeChoice(
             name: 'VERSION',
             description: 'Select version',
-            choices: [
+            choiceType: [
                 $class: 'DynamicReferenceParameter',
                 script: [
                     $class: 'GroovyScript',
