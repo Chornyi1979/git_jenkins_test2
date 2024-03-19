@@ -12,7 +12,7 @@ pipeline {
         activeChoice(
             name: 'VERSION',
             description: 'Select version',
-            name: [
+            type: [
                 $class: 'DynamicReferenceParameter',
                 script: [
                     $class: 'GroovyScript',
@@ -40,7 +40,7 @@ pipeline {
                                 error "Failed to retrieve available versions."
                             }
                             
-                            return [versions.join(",")]
+                            return versions
                         """
                     ]
                 ]
