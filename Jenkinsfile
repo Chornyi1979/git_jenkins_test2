@@ -9,7 +9,7 @@ pipeline {
             name: 'ENVIRONMENT'
         )
         
-        reactiveChoice(
+        extendedChoice(
             name: 'VERSION',
             description: 'Select version',
             choiceType: [
