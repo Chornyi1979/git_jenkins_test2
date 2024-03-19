@@ -8,7 +8,7 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-        choiceParam(
+        choice(
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
             filterLength: 1,
@@ -39,21 +39,6 @@ pipeline {
                         return versions
                     """
                 ]
-            ],
-            parameters: [
-                credentials(
-                    credentialType: 'UsernamePasswordMultiBinding',
-                    defaultValue: '',
-                    description: 'Docker Hub API Token',
-                    name: 'TOKEN',
-                    required: true,
-                    store: [
-                        $class: 'UsernamePasswordMultiBinding$UsernamePasswordMultiBindingCredentialImpl',
-                        credentialsId: 'docker-hub-api-token',
-                        usernameVariable: 'USERNAME',
-                        passwordVariable: 'PASSWORD'
-                    ]
-                )
             ]
         )
     }
