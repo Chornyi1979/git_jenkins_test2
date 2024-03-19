@@ -19,6 +19,7 @@ pipeline {
                     script: [
                         classpath: [], sandbox: false, 
                         script: """
+                          import groovy.json.JsonSlurperClassic
                             def versions = []
                             def connection = new URL('https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags')
                             .openConnection() as HttpURLConnection
