@@ -1,7 +1,11 @@
 def gv
 pipeline {
     agent any
-   
+
+    tools {
+        maven 'maven-3.9'
+        dockerTool 'docker'
+    }
     properties([
       parameters([
         [$class: 'ChoiceParameter',
@@ -43,11 +47,7 @@ pipeline {
         ]
     ])
    
-    tools {
-        maven 'maven-3.9'
-        dockerTool 'docker'
-    }
-
+    
     stages {
 
         stage ("init") {
