@@ -8,7 +8,7 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-        activeChoiceParam(
+        activeChoice(
             name: 'VERSION',
             description: 'Select version',
             choices: [
