@@ -1,4 +1,3 @@
-
 def gv
 pipeline {
     agent any
@@ -75,10 +74,10 @@ pipeline {
                     gv.deployApp(selectedVersion)
                     echo "Selected Version: ${selectedVersion}"
                     sh "docker pull chornyi1979/my-repo:${selectedVersion}"                   
-                    } 
-                }
+                } 
             }
-        }    
+        }
+            
         
 
         stage('Healthcheck') {
