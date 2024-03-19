@@ -47,46 +47,8 @@ pipeline {
         maven 'maven-3.9'
         dockerTool 'docker'
     }
-    properties([
-      parameters([
-        [$class: 'ChoiceParameter',
-            choiceType: 'PT_SINGLE_SELECT',
-            description: 'Select version',
-            name: [
-                $class: 'DynamicReferenceParameter',
-                script: [
-                    $class: 'GroovyScript',
-                    fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-                    script: [
-                        classpath: [], sandbox: false, 
-                        script: """
-                          import groovy.json.JsonSlurperClassic
-                          import java.net.HttpURLConnection
-                          import java.net.URL
-                          
-                            def versions = []
-                            def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                            def connection = new URL(apiUrl).openConnection() as HttpURLConnection
-                            connection.setRequestProperty('Accept', 'application/json')
-                            def response = connection.inputStream.getText()
-                            def json = new JsonSlurperClassic().parseText(response)
-                            if (json.results) {
-                                json.results.each { result ->
-                                    def name = result.name
-                                    versions.add(name)
-                                }
-                                echo "Available Versions: ${versions}"
-                            } else {
-                                error "Failed to retrieve available versions."
-                            }
-                            
-                            return versions
-                        """
-                    ]
-                ]
-            ]
-        ]
-    ])
+   
+ 
    
     
     stages {
