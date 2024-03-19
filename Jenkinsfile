@@ -12,7 +12,7 @@ pipeline {
         extendedChoice(
             name: 'VERSION',
             description: 'Select version',
-            choiceType: [
+            type: [
                 $class: 'DynamicReferenceParameter',
                 script: [
                     $class: 'GroovyScript',
