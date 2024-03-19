@@ -9,35 +9,35 @@ pipeline {
             name: 'ENVIRONMENT'
         )
         choice(
-            choiceType: 'PT_SINGLE_SELECT',
-            description: 'Select version',
-            filterLength: 1,
-            filterable: false,
             name: 'VERSION',
-            script: [
-                $class: 'GroovyScript',
-                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
+            description: 'Select version',
+            choicesProvider: [
+                $class: 'DynamicReferenceParameter',
                 script: [
-                    classpath: [], sandbox: false, 
-                    script: """
-                        def versions = []
-                        def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                        
-                        def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-                        echo "Response: ${response}"
-                        def json = readJSON text: response
-                        if (json.results) {
-                            json.results.each { result ->
-                                def name = result.name
-                                versions.add(name)
+                    $class: 'GroovyScript',
+                    fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
+                    script: [
+                        classpath: [], sandbox: false, 
+                        script: """
+                            def versions = []
+                            def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
+                            
+                            def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
+                            echo "Response: ${response}"
+                            def json = readJSON text: response
+                            if (json.results) {
+                                json.results.each { result ->
+                                    def name = result.name
+                                    versions.add(name)
+                                }
+                                echo "Available Versions: ${versions}"
+                            } else {
+                                error "Failed to retrieve available versions."
                             }
-                            echo "Available Versions: ${versions}"
-                        } else {
-                            error "Failed to retrieve available versions."
-                        }
-                        
-                        return versions
-                    """
+                            
+                            return versions
+                        """
+                    ]
                 ]
             ]
         )
