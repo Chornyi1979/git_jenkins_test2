@@ -20,14 +20,14 @@ pipeline {
                         classpath: [], sandbox: false, 
                         script: """
                           import groovy.json.JsonSlurperClassic
+                          import java.net.HttpURLConnection
+                          import java.net.URL
                             def versions = []
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                            .openConnection() as HttpURLConnection
+                            def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
-                            def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-                            echo "Response: ${response}"
-                            def json = readJSON text: response
-                            data = new JsonSlurperClassic().parseText(json)
+                            def response = connection.inputStream.getText()
+                            def json = new JsonSlurperClassic().parseText(response)
                             if (json.results) {
                                 json.results.each { result ->
                                     def name = result.name
