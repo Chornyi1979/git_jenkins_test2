@@ -20,11 +20,13 @@ pipeline {
                         classpath: [], sandbox: false, 
                         script: """
                             def versions = []
-                            def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                            
-                            def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
+                            def connection = new URL('https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags')
+                            .openConnection() as HttpURLConnection
+                            connection.setRequestProperty('Accept', 'application/json')
+                            def response = sh(script: "curl -s ${new URL}", returnStdout: true)
                             echo "Response: ${response}"
                             def json = readJSON text: response
+                            data = new JsonSlurperClassic().parseText(json)
                             if (json.results) {
                                 json.results.each { result ->
                                     def name = result.name
