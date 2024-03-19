@@ -1,7 +1,7 @@
 def gv
 pipeline {
     agent any
-    def versions = []
+   
     parameters {
         choice(
             choices: ['test', 'preprod', 'prod'],
@@ -23,7 +23,9 @@ pipeline {
                           import groovy.json.JsonSlurperClassic
                           import java.net.HttpURLConnection
                           import java.net.URL
-                           
+                          class VersionUtils {
+                            static List<String> getVersions() {
+                            def versions = [] 
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
