@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 def gv
 pipeline {
     agent any
@@ -98,3 +99,5 @@ pipeline {
         }
     }
 }
+=======
+>>>>>>> ece22b7 (ch jen)
