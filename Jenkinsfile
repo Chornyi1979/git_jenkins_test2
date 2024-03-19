@@ -8,6 +8,7 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
+        def versions = []
         activeChoice(
             name: 'VERSION',
             description: 'Select version',
@@ -22,7 +23,7 @@ pipeline {
                           import groovy.json.JsonSlurperClassic
                           import java.net.HttpURLConnection
                           import java.net.URL
-                            def versions = []
+                            
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
