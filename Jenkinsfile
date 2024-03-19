@@ -40,7 +40,7 @@ pipeline {
                                 error "Failed to retrieve available versions."
                             }
                             
-                            return versions
+                            return [versions.join(",")]
                         """
                     ]
                 ]
