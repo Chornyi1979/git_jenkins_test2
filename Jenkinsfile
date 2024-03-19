@@ -9,7 +9,7 @@ pipeline {
             name: 'ENVIRONMENT'
         )
         
-        [$class: 'ChoiceParameter',
+        activeChoice(
             name: 'VERSION',
             description: 'Select version',
             type: [
@@ -45,7 +45,7 @@ pipeline {
                     ]
                 ]
             ]
-        ]
+        )
     }
    
     tools {
