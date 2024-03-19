@@ -9,8 +9,43 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-       
-         
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select version',
+            filterLength: 1,
+            filterable: false,
+            name: 'VERSION',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
+                script: [classpath: [], sandbox: false, 
+                    script: """
+                        def versions = []
+                        def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
+                        
+                        def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
+                        echo "Response: ${response}"
+                        def json = readJSON text: response
+                        if (json.results) {
+                            json.results.each { result ->
+                                def name = result.name
+                                versions.add(name)
+                            }
+                            echo "Available Versions: ${versions}"
+                        } else {
+                            error "Failed to retrieve available versions."
+                        }
+                        
+                        return versions
+                    """
+                ]],
+            parameters: [
+                [$class: 'CredentialsParameterValue',
+                    credentialsId: 'docker-hub-api-token',
+                    name: 'TOKEN',
+                    description: 'Docker Hub API Token']
+            ]
+        ]
+                 
     }  
    
     tools {
@@ -35,48 +70,15 @@ pipeline {
         }
 
         stage("Choice Versions and Deploy") {
-          steps {
-            withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'TOKEN')]) {           
+            steps {
                 script {
-                  def versions = []
-                  def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                  
-                  def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
-                  echo "Response: ${response}"
-                  def json = readJSON text: response
-                  if (json.results) {
-                    json.results.each { result ->
-                      def name = result.name
-                      versions.add(name)
-                    }
-                    echo "Available Versions: ${versions}"
-                    
-                    def selectedVersion = null
-                    while (selectedVersion == null || !versions.contains(selectedVersion)) {
-                      selectedVersion = input(
-                        id: 'versionInput',
-                        message: 'Select version',
-                        parameters: [
-                          choice(choices: versions, description: 'Select version', name: 'VERSION')
-                        ]
-                      )
-                        
-                      if (!versions.contains(selectedVersion)) {
-                        echo "Invalid version selected. Please select a valid version."
-                      }
-                    }
                     gv.deployApp(selectedVersion)
                     echo "Selected Version: ${selectedVersion}"
-                    sh "docker pull chornyi1979/my-repo:${selectedVersion}"
-                      
-                  } 
-                  else {
-                  error "Failed to retrieve available versions."
-                  }
+                    sh "docker pull chornyi1979/my-repo:${selectedVersion}"                   
+                    } 
                 }
             }
-          }
-        }
+        }    
         
 
         stage('Healthcheck') {
