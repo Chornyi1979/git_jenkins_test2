@@ -2,15 +2,10 @@ def gv
 pipeline {
     agent any
    
-    parameters {
-        choice(
-            choices: ['test', 'preprod', 'prod'],
-            description: 'Select the environment to deploy',
-            name: 'ENVIRONMENT'
-        )
-        
-        activeChoice(
-            
+    properties([
+      parameters([
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
             name: [
                 $class: 'DynamicReferenceParameter',
@@ -45,8 +40,8 @@ pipeline {
                     ]
                 ]
             ]
-        )
-    }
+        ])
+    ])
    
     tools {
         maven 'maven-3.9'
