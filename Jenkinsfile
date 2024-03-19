@@ -9,7 +9,7 @@ pipeline {
             name: 'ENVIRONMENT'
         )
         
-        activeChoice(
+        activeChoiceReactiveParameter(
             name: 'VERSION',
             description: 'Select version',
             choiceType: [
