@@ -21,10 +21,10 @@ pipeline {
                         script: """
                           import groovy.json.JsonSlurperClassic
                             def versions = []
-                            def connection = new URL('https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags')
+                            def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             .openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
-                            def response = sh(script: "curl -s ${connection}", returnStdout: true)
+                            def response = sh(script: "curl -s ${apiUrl}", returnStdout: true)
                             echo "Response: ${response}"
                             def json = readJSON text: response
                             data = new JsonSlurperClassic().parseText(json)
