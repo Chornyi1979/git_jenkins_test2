@@ -8,15 +8,17 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-        [$class: 'ChoiceParameter',
+        choiceParam(
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
             filterLength: 1,
             filterable: false,
             name: 'VERSION',
-            script: [$class: 'GroovyScript',
+            script: [
+                $class: 'GroovyScript',
                 fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-                script: [classpath: [], sandbox: false, 
+                script: [
+                    classpath: [], sandbox: false, 
                     script: """
                         def versions = []
                         def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
@@ -36,16 +38,25 @@ pipeline {
                         
                         return versions
                     """
-                ]],
+                ]
+            ],
             parameters: [
-                [$class: 'CredentialsParameterValue',
-                    credentialsId: 'docker-hub-api-token',
+                credentials(
+                    credentialType: 'UsernamePasswordMultiBinding',
+                    defaultValue: '',
+                    description: 'Docker Hub API Token',
                     name: 'TOKEN',
-                    description: 'Docker Hub API Token']
+                    required: true,
+                    store: [
+                        $class: 'UsernamePasswordMultiBinding$UsernamePasswordMultiBindingCredentialImpl',
+                        credentialsId: 'docker-hub-api-token',
+                        usernameVariable: 'USERNAME',
+                        passwordVariable: 'PASSWORD'
+                    ]
+                )
             ]
-        ]
-                 
-    }  
+        )
+    }
    
     tools {
         maven 'maven-3.9'
