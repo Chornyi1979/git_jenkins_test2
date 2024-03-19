@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     triggers {
-        changeRequest()
+        GenericTrigger()
     }
    
     tools {
