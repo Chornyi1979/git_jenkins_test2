@@ -15,7 +15,9 @@ pipeline {
         activeChoice(
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
-            name: [
+            filterLength: 1,
+            filterable: false,
+            name: 'component',
                 $class: 'DynamicReferenceParameter',
                 script: [
                     $class: 'GroovyScript',
@@ -30,9 +32,10 @@ pipeline {
                             def list = []
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             def connection = new URL(apiUrl).openConnection() as HttpURLConnection
+                            .openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
-                            def response = connection.inputStream.getText()
-                            def json = new JsonSlurperClassic().parseText(response)
+                            def json = connection.inputStream.text
+                            data = new JsonSlurperClassic().parseText(json)
                             if (json.results) {
                                 json.results.each { result ->
                                     def name = result.name
