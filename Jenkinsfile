@@ -15,7 +15,7 @@ pipeline {
         activeChoice(
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
-            name: [
+            type: [
                 $class: 'DynamicReferenceParameter',
                 script: [
                     $class: 'GroovyScript',
@@ -27,7 +27,7 @@ pipeline {
                           import java.net.HttpURLConnection
                           import java.net.URL
                           
-                            def imageList = []
+                            def imagelist = []
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
@@ -38,12 +38,12 @@ pipeline {
                                     def name = result.name
                                     imageList.add(name)
                                 }
-                                echo "Available Versions: ${imageList}"
+                                echo "Available Versions: ${list}"
                             } else {
                                 error "Failed to retrieve available versions."
                             }
                             
-                            return imageList
+                            return list
                         """
                     ]
                 ]
