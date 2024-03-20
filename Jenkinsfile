@@ -23,7 +23,7 @@ properties([
                    connection.setRequestProperty('Accept', 'application/json')
                    def json = connection.inputStream.text
                    data = new JsonSlurperClassic().parseText(json)
-                  
+                   println data
                    data.each { component ->
                        list += component.results.name 
                    }
