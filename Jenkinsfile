@@ -19,7 +19,7 @@ pipeline {
             filterable: false,
             name: 'component',
             script: [
-                $class: 'org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript',
+                $class: 'GroovyScript',
                 fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
                 script: [
                     classpath: [], sandbox: false,
