@@ -25,7 +25,7 @@ properties([
                    def data = new JsonSlurperClassic().parseText(json)
                    return data
                    
-                   data.each { component ->
+                   data.results.each { component ->
                        list += component.name
                    }
                    
