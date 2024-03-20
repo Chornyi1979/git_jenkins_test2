@@ -18,7 +18,7 @@ properties([
                   import java.net.URL
 
                    def list = []
-                   def connection = new URL("https://run.mocky.io/v3/e406ee99-be79-4d50-818f-b186dad7f4f4")
+                   def connection = new URL("https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags")
                    .openConnection() as HttpURLConnection
                    connection.setRequestProperty('Accept', 'application/json')
                    def json = connection.inputStream.text
