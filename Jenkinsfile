@@ -3,7 +3,7 @@ properties([
   parameters([
     [$class: 'CascadeChoiceParameter', 
       choiceType: 'PT_SINGLE_SELECT', 
-      description: 'Select environment',
+      description: 'Select version image',
       filterLength: 1,
       filterable: false,
       name: 'VERSION', 
