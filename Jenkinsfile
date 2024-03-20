@@ -27,6 +27,7 @@ properties([
                         def jsonSlurper = new JsonSlurperClassic()
                         def response = jsonSlurper.parse(connection.inputStream)
                         def results = response.results
+                        println "Results: $results"
                         def tags = results.collect { it.name }
                         return tags
                    } else {
