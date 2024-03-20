@@ -29,7 +29,7 @@ properties([
                             def name = result.name
                             list.add(name)
                         }
-                        echo "Available Versions: ${list}"
+                        println "Available Versions: ${list}"
                     else {
                         error "Failed to retrieve available versions."
                         }
