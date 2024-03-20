@@ -20,6 +20,7 @@ pipeline {
             name: 'component',
                 $class: 'DynamicReferenceParameter',
                 script: [
+                    name: "org"
                     $class: 'GroovyScript',
                     fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
                     script: [
