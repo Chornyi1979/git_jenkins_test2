@@ -17,19 +17,24 @@ properties([
                   import java.net.HttpURLConnection
                   import java.net.URL
 
-                   def list = []
+                   
                    def connection = new URL("https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags")
-                   .openConnection() as HttpURLConnection
-                   connection.setRequestProperty('Accept', 'application/json')
-                   def json = connection.inputStream.text
-                   def data = new JsonSlurperClassic().parseText(json)
-                   return data
-                   
-                   data.results.each { component ->
-                       list += component.name
+                   def connection = url.openConnection() as HttpURLConnection
+                   connection.requestMethod = "GET"
+                   connection.connect()
+
+                   if (connection.responseCode == 200) {
+                        def jsonSlurper = new JsonSlurperClassic()
+                        def response = jsonSlurper.parse(connection.inputStream)
+                        def results = response.results
+                        def tags = results.collect { it.name }
+                        return tags
+                   } else {
+                        return ["Could not get version"]
                    }
-                   
-                   return list
+                }
+                                   
+                 
                 """
             ]
         ]
