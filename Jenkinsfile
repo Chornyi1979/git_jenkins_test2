@@ -23,8 +23,8 @@ properties([
                    connection.setRequestProperty('Accept', 'application/json')
                    def json = connection.inputStream.text
                    def data = new JsonSlurperClassic().parseText(json)
-                   if (json.results) {
-                     json.results.each { result ->
+                   if (data.results) {
+                     data.results.each { result ->
                        def name = result.name
                        list.add(name)
                      }
