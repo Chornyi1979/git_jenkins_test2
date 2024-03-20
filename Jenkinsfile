@@ -26,7 +26,7 @@ properties([
                    if (connection.responseCode == 200) {
                         def jsonSlurper = new JsonSlurperClassic()
                         def response = jsonSlurper.parse(connection.inputStream)
-                        echo "Response: ${response}"
+                       
                         def results = response.results
                        
                         def tags = results.collect { it.name }
