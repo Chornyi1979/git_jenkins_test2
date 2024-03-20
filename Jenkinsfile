@@ -1,4 +1,24 @@
 def gv
+properties([
+  parameters([
+    [$class: 'CascadeChoiceParameter', 
+      choiceType: 'PT_SINGLE_SELECT', 
+      description: 'Select environment',
+      filterLength: 1,
+      filterable: false,
+      name: 'Environment', 
+      script: [
+        $class: 'GroovyScript', 
+        script: [
+          classpath: [], 
+          sandbox: false, 
+          script: 
+            'return[\'Development\',\'Production\']'
+        ]
+      ]
+    ]
+  ])
+])
 pipeline {
     agent any
 
