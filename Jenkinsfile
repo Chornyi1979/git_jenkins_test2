@@ -12,7 +12,7 @@ pipeline {
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
         )
-        activChoice(
+        activeChoice(
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
             filterLength: 1,
