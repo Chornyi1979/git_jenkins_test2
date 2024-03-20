@@ -6,50 +6,30 @@ pipeline {
         maven 'maven-3.9'
         dockerTool 'docker'
     }
-    parameters {
-        choice(
-            choices: ['test', 'preprod', 'prod'],
-            description: 'Select the environment to deploy',
-            name: 'ENVIRONMENT'
-        )
-        activeChoice(
+    parameters([
+        [$class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
-            description: 'Select version',
+            description: 'Select a choice',
             filterLength: 1,
             filterable: false,
-            name: 'VERSION',
-            script: [
-                $class: 'GroovyScript',
-                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-                script: [
-                    classpath: [], sandbox: false,
+            name: 'component',
+            script: [$class: 'GroovyScript',
+                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get component"]'],
+                script: [classpath: [], sandbox: false, 
                     script: """
-                        import groovy.json.JsonSlurperClassic
-                        import java.net.HttpURLConnection
-                        import java.net.URL
-    
-                        def list = []
-                        def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                        def connection = new URL(apiUrl).openConnection() as HttpURLConnection
-                        connection.setRequestProperty('Accept', 'application/json')
-                        def json = connection.inputStream.text
-                        def data = new JsonSlurperClassic().parseText(json)
-                        if (data.results) {
-                            data.results.each { result ->
-                                def name = result.name
-                                list.add(name)
+                         import groovy.json.JsonSlurperClassic
+                            def list = []
+                            def connection = new URL("https://run.mocky.io/v3/e406ee99-be79-4d50-818f-b186dad7f4f4")
+                            .openConnection() as HttpURLConnection
+                            connection.setRequestProperty('Accept', 'application/json')
+                            def json = connection.inputStream.text
+                            data = new JsonSlurperClassic().parseText(json)
+                            data.each { component ->
+                                list += component.name
                             }
-                            echo "Available Versions: ${list}"
-                        } else {
-                            error "Failed to retrieve available versions."
-                        }
-    
-                        return list
+                            return list
                     """
-                ]
-            ]
-        )
-    } 
+    ]]]])
     
     stages {
 
