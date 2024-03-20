@@ -28,7 +28,7 @@ pipeline {
                         import java.net.HttpURLConnection
                         import java.net.URL
     
-                        def list = []
+                        def list = [] 
                         def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                         def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                         connection.setRequestProperty('Accept', 'application/json')
