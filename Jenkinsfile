@@ -22,8 +22,8 @@ properties([
                    .openConnection() as HttpURLConnection
                    connection.setRequestProperty('Accept', 'application/json')
                    def json = connection.inputStream.text
-                   data = new JsonSlurperClassic().parseText(json)
-                   println data
+                   def data = new JsonSlurperClassic().parseText(json)
+                   return data
                    data.each { component ->
                        list += component.results.name 
                    }
