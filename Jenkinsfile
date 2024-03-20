@@ -38,7 +38,7 @@ pipeline {
                                     def name = result.name
                                     imageList.add(name)
                                 }
-                                echo "Available Versions: ${list}"
+                                echo "Available Versions: ${imageList}"
                             } else {
                                 error "Failed to retrieve available versions."
                             }
