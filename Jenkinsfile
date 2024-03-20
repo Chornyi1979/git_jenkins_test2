@@ -27,7 +27,7 @@ pipeline {
                           import java.net.HttpURLConnection
                           import java.net.URL
                           
-                            def list = []
+                            def imageList = []
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
@@ -36,14 +36,14 @@ pipeline {
                             if (json.results) {
                                 json.results.each { result ->
                                     def name = result.name
-                                    list.add(name)
+                                    imageList.add(name)
                                 }
                                 echo "Available Versions: ${list}"
                             } else {
                                 error "Failed to retrieve available versions."
                             }
                             
-                            return list
+                            return imageList
                         """
                     ]
                 ]
