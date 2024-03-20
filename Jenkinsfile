@@ -18,40 +18,36 @@ pipeline {
             filterLength: 1,
             filterable: false,
             name: 'component',
-                $class: 'DynamicReferenceParameter',
+            script: [
+                $class: 'org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript',
+                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
                 script: [
-                    name: "org"
-                    $class: 'GroovyScript',
-                    fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-                    script: [
-                        classpath: [], sandbox: false, 
-                        script: """
-                          import groovy.json.JsonSlurperClassic
-                          import java.net.HttpURLConnection
-                          import java.net.URL
-                          
-                            def list = []
-                            def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                            def connection = new URL(apiUrl).openConnection() as HttpURLConnection
-                            .openConnection() as HttpURLConnection
-                            connection.setRequestProperty('Accept', 'application/json')
-                            def json = connection.inputStream.text
-                            data = new JsonSlurperClassic().parseText(json)
-                            if (json.results) {
-                                json.results.each { result ->
-                                    def name = result.name
-                                    imageList.add(name)
-                                }
-                                echo "Available Versions: ${list}"
-                            } else {
-                                error "Failed to retrieve available versions."
+                    classpath: [], sandbox: false,
+                    script: """
+                        import groovy.json.JsonSlurperClassic
+                        import java.net.HttpURLConnection
+                        import java.net.URL
+    
+                        def list = []
+                        def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
+                        def connection = new URL(apiUrl).openConnection() as HttpURLConnection
+                        connection.setRequestProperty('Accept', 'application/json')
+                        def json = connection.inputStream.text
+                        def data = new JsonSlurperClassic().parseText(json)
+                        if (data.results) {
+                            data.results.each { result ->
+                                def name = result.name
+                                list.add(name)
                             }
-                            
-                            return list
-                        """
-                    ]
+                            echo "Available Versions: \${list}"
+                        } else {
+                            error "Failed to retrieve available versions."
+                        }
+    
+                        return list
+                    """
                 ]
-            
+            ]
         )
     }
     
