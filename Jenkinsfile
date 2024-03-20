@@ -24,8 +24,8 @@ properties([
                    def json = connection.inputStream.text
                    def data = new JsonSlurperClassic().parseText(json)
                    data.each { component ->
-                                list += component.name
-                            }
+                                list += component.result.name
+                   }
                    
                    return list
                 """
