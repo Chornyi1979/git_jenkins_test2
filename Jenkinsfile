@@ -26,7 +26,7 @@ properties([
                    if (json.results) {
                      json.results.each { result ->
                        def name = result.name
-                       versions.add(name)
+                       list.add(name)
                      }
                    
                    return list
