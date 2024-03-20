@@ -13,9 +13,9 @@ properties([
             script: [
                 classpath: [], sandbox: false,
                 script: """
-                    import groovy.json.JsonSlurperClassic
-                    import java.net.HttpURLConnection
-                    import java.net.URL
+                  import groovy.json.JsonSlurperClassic
+                  import java.net.HttpURLConnection
+                  import java.net.URL
 
                     def list = []
                     def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
