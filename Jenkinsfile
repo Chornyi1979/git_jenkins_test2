@@ -17,7 +17,7 @@ pipeline {
             description: 'Select version',
             filterLength: 1,
             filterable: false,
-            name: 'component',
+            name: 'VERSION',
             script: [
                 $class: 'GroovyScript',
                 fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
