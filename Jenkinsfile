@@ -29,7 +29,7 @@ properties([
                             list.add(name)
                         }
                         echo "Available Versions: ${list}"
-                    } else {
+                    else {
                         error "Failed to retrieve available versions."
                     }
 
