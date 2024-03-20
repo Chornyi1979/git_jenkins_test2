@@ -17,12 +17,13 @@ properties([
                   import java.net.HttpURLConnection
                   import java.net.URL
 
-                    def list = []
+                   
                     def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                     def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                     connection.setRequestProperty('Accept', 'application/json')
                     def json = connection.inputStream.text
                     def data = new JsonSlurperClassic().parseText(json)
+                    def list = []
                     if (data.results) {
                         data.results.each { result ->
                             def name = result.name
