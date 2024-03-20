@@ -1,7 +1,18 @@
 def gv
-properties([
-      parameters([
-        [$class: 'ChoiceParameter',
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven-3.9'
+        dockerTool 'docker'
+    }
+    parameters {
+        choice(
+            choices: ['test', 'preprod', 'prod'],
+            description: 'Select the environment to deploy',
+            name: 'ENVIRONMENT'
+        )
+        activeChoice(
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version',
             name: [
@@ -16,7 +27,7 @@ properties([
                           import java.net.HttpURLConnection
                           import java.net.URL
                           
-                            def versions = []
+                            def list = []
                             def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
                             def connection = new URL(apiUrl).openConnection() as HttpURLConnection
                             connection.setRequestProperty('Accept', 'application/json')
@@ -25,31 +36,20 @@ properties([
                             if (json.results) {
                                 json.results.each { result ->
                                     def name = result.name
-                                    versions.add(name)
+                                    list.add(name)
                                 }
-                                echo "Available Versions: ${versions}"
+                                echo "Available Versions: ${list}"
                             } else {
                                 error "Failed to retrieve available versions."
                             }
                             
-                            return versions
+                            return list
                         """
                     ]
                 ]
             ]
         ]
-])
-
-pipeline {
-    agent any
-
-    tools {
-        maven 'maven-3.9'
-        dockerTool 'docker'
-    }
-   
- 
-   
+    )
     
     stages {
 
