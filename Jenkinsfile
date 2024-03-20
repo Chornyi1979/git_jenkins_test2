@@ -1,7 +1,7 @@
 def gv
 properties([
   parameters([
-    [$class: 'CascadeChoiceParameter', 
+    [$class: 'ChoiceParameter', 
       choiceType: 'PT_SINGLE_SELECT', 
       description: 'Select version image',
       filterLength: 1,
