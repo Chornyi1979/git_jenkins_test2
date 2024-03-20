@@ -23,8 +23,9 @@ properties([
                    connection.setRequestProperty('Accept', 'application/json')
                    def json = connection.inputStream.text
                    data = new JsonSlurperClassic().parseText(json)
+                   echo ${data}
                    data.each { component ->
-                       list += component.results.name ?: ""
+                       list += component.results.name 
                    }
                    return list
                 """
