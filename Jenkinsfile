@@ -17,24 +17,16 @@ properties([
                   import java.net.HttpURLConnection
                   import java.net.URL
 
-                   
-                    def apiUrl = 'https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags'
-                    def connection = new URL(apiUrl).openConnection() as HttpURLConnection
-                    connection.setRequestProperty('Accept', 'application/json')
-                    def json = connection.inputStream.text
-                    def data = new JsonSlurperClassic().parseText(json)
-                    def list = []
-                    if (data.results) {
-                        data.results.each { result ->
-                            def name = result.name
-                            list.add(name)
-                        }
-                        println "Available Versions: ${list}"
-                    else {
-                        error "Failed to retrieve available versions."
-                        }
-
-                    return [list]
+                   def list = []
+                   def connection = new URL("https://run.mocky.io/v3/e406ee99-be79-4d50-818f-b186dad7f4f4")
+                   .openConnection() as HttpURLConnection
+                   connection.setRequestProperty('Accept', 'application/json')
+                   def json = connection.inputStream.text
+                   data = new JsonSlurperClassic().parseText(json)
+                   data.each { component ->
+                       list += component.name
+                   }
+                   return list
                 """
             ]
         ]
