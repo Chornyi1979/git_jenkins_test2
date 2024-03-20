@@ -13,7 +13,7 @@ properties([
           classpath: [], 
           sandbox: false, 
           script: 
-            return [\'Development\', \'Production\', \'QA\']
+            'return[\'Development\', \'Production\', \'QA\']'
         ]
       ]
     ]
