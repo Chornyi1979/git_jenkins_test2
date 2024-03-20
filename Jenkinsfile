@@ -6,7 +6,7 @@ properties([
       description: 'Select environment',
       filterLength: 1,
       filterable: false,
-      name: 'Environment', 
+      name: 'VERSION', 
       script: [
         $class: 'GroovyScript', 
         script: [
