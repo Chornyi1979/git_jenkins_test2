@@ -6,7 +6,8 @@ pipeline {
         maven 'maven-3.9'
         dockerTool 'docker'
     }
-    parameters([
+    parameters {
+        activeChoice
         [$class: 'ChoiceParameter',
             choiceType: 'PT_SINGLE_SELECT',
             description: 'Select a choice',
@@ -29,7 +30,7 @@ pipeline {
                             }
                             return list
                     """
-    ]]]])
+    ]]]}
     
     stages {
 
