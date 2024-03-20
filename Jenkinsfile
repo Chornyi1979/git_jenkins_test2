@@ -34,7 +34,7 @@ properties([
                         error "Failed to retrieve available versions."
                         }
 
-                    return list
+                    return [list]
                 """
             ]
         ]
