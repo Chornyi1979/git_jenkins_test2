@@ -31,7 +31,7 @@ properties([
                         echo "Available Versions: ${list}"
                     else {
                         error "Failed to retrieve available versions."
-                    }
+                        }
 
                     return list
                 """
