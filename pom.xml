@@ -143,7 +143,7 @@
             <os>linux</os>  
             <javaVersion>Java 8</javaVersion>
 	    <webContainer>Tomcat 9.0</webContainer>
-	    <image>chornyi1979/my-repo:latest</image>
+	    <image>chornyi1979/my-repo:${selectedVersion}.war</image>
 	  </runtime>
           <deployment>
             <resources>
