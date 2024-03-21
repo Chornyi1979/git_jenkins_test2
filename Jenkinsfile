@@ -82,7 +82,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {                  
-                    gv.deployApp(selectedVersion)                         
+                    gv.deployApp()                         
                 } 
             }
         }
