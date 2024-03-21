@@ -20,14 +20,27 @@ properties([
                    
                    def connection = new URL("https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags")
                    def connection = new URL(url).openConnection()
-                   def response = connection.getInputStream()
-                   println response
-                   def jsonSlurper = new JsonSlurper()
-                   def data = jsonSlurper.parse(response)
-                   println data
-                   def results = data.results
-                   def tags = results.collect { it.name }
-                   return tags
+                   connection.setRequestProperty("Accept", "application/json")
+                   connection.setRequestProperty("Content-Type", "application/json")
+                   connection.setRequestMethod("GET")
+                   connection.connect()
+
+                   if (connection.responseCode == 200) {
+                     def response = connection.getInputStream()
+                     def text = new InputStreamReader(response).getText()
+                     def jsonSlurper = new JsonSlurper()
+                     def data = jsonSlurper.parseText(text)
+
+                     if (data.results) {
+                       def results = data.results
+                       def tags = results.collect { it.name }
+                       return tags
+                     } else {
+                     return ["Could not get version"]
+                     }
+                  } else {
+                      return ["Could not connect to Docker Hub"]
+                  }
                  
                 """
             ]
