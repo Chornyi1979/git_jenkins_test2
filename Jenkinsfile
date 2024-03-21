@@ -89,7 +89,9 @@ pipeline {
                     // Pull the selected version from Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "docker pull ${imageName}"
-                        sh "docker save ${imageName} -o ${project.basedir}/target/my-repo.tar"
+                        sh "docker save ${imageName} -o my-repo.tar"
+                        sh "pwd"
+                        sh "ls"
                     } 
                 }
             }
