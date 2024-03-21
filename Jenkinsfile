@@ -79,10 +79,10 @@ pipeline {
             }
         }
 
-        stage("Choice Versions and Deploy") {
+        stage("Deploy") {
             steps {
                 script {
-                    gv.deployApp(selectedVersion)
+                    gv.deployApp()
                     echo "Selected Version: ${selectedVersion}"
                     sh "docker pull chornyi1979/my-repo:${selectedVersion}"                   
                 } 
