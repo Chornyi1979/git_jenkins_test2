@@ -79,10 +79,45 @@ pipeline {
             }
         }
 
+        
+        stage('Pull Image') {
+            steps {
+                script {
+                    def selectedVersion = params.VERSION
+                    def imageName = "chornyi1979/my-repo:${selectedVersion}"
+                    
+                    // Pull the selected version from Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker pull ${imageName}"
+                }
+            }
+        }
+    
+
         stage("Deploy") {
             steps {
                 script {                  
-                    gv.deployApp()                         
+                    gv.deployApp() 
+                    def selectedVersion = params.VERSION
+                    def imageName = "chornyi1979/my-repo:${selectedVersion}"
+                    
+                    // Deploy the image to the selected environment
+                    switch (params.ENVIRONMENT) {
+                        case 'test':
+                            // Deploy to test environment
+                            // Add your deployment steps here
+                            break
+                        case 'preprod':
+                            // Deploy to preprod environment
+                            // Add your deployment steps here
+                            break
+                        case 'prod':
+                            // Deploy to prod environment
+                            // Add your deployment steps here
+                            break
+                        default:
+                            println "Invalid environment selected"
+                            break
                 } 
             }
         }
