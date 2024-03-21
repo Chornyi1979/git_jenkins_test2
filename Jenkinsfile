@@ -30,8 +30,8 @@ properties([
                      echo response
                      def text = new InputStreamReader(response).getText()
                      echo text
-                     def jsonSlurper = new JsonSlurper()
-                     def data = jsonSlurper.parseText(text)
+                     def jsonSlurper = new JsonSlurperClassic()
+                     def data = jsonSlurperClassic.parseText(text)
 
                      if (data.results) {
                        def results = data.results
