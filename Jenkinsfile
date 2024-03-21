@@ -23,7 +23,12 @@ properties([
                    def connection = new URL(url).openConnection() as HttpURLConnection                   
                    connection.setRequestMethod("GET")
 
-                   
+                   // Set Docker Hub credentials
+                   withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                       def userCredentials = "${USER}:${PASS}"
+                       def basicAuth = "Basic " + userCredentials.bytes.encodeBase64().toString()
+                       connection.setRequestProperty("Authorization", basicAuth)
+                   }
                    
                    connection.connect()
                    def dockerhub_response = [:]
