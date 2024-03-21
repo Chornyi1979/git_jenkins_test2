@@ -84,12 +84,12 @@ pipeline {
             steps {
                 script {
                     def selectedVersion = params.VERSION
-                    def imageName = "chornyi1979/my-repo:${selectedVersion}"
+                    def imageName = "my-repo:${selectedVersion}"
                     
                     // Pull the selected version from Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "docker pull ${imageName}"
-                        sh "docker save ${imageName} -o target/${targetFileName}"
+                        sh "docker save ${imageName} -o target/${imageName}"
                  
                     } 
                 }
