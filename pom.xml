@@ -150,7 +150,7 @@
               <resource>
                 <directory>${project.basedir}/target</directory>
                 <includes>
-                  <include>*.war</include>
+                  <include>my-repo:${selectedVersion}.war</include>
                 </includes>
               </resource>
             </resources>
