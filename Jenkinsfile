@@ -39,7 +39,7 @@ properties([
                    }
                    // The returned value MUST be a Groovy type of List or a related type (inherited from List)
                    // It is necessary for the Active Choice plugin to display results in a combo-box
-                   return image_tag_list.sort()
+                   return image_tag_list
                 """
             ]
         ]
