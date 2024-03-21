@@ -89,7 +89,7 @@ pipeline {
                     // Pull the selected version from Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "docker pull ${imageName}"
-                        sh "docker save ${imageName} -o target/my-repo:${selectedVersion}"
+                        sh "docker save ${imageName} -o target/my-repo:${selectedVersion}.war"
                  
                     } 
                 }
