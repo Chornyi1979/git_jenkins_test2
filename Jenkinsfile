@@ -27,7 +27,9 @@ properties([
 
                    if (connection.responseCode == 200) {
                      def response = connection.getInputStream()
+                     println response
                      def text = new InputStreamReader(response).getText()
+                     println text
                      def jsonSlurper = new JsonSlurper()
                      def data = jsonSlurper.parseText(text)
 
