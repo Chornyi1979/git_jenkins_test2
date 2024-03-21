@@ -99,8 +99,6 @@ pipeline {
             steps {
                 script {                  
                     gv.deployApp() 
-                    def selectedVersion = params.VERSION
-                    def imageName = "chornyi1979/my-repo:${selectedVersion}"
                     
                     // Deploy the image to the selected environment
                     switch (params.ENVIRONMENT) {
