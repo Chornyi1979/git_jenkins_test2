@@ -16,12 +16,11 @@ properties([
                   import groovy.json.JsonSlurperClassic
                   import java.net.HttpURLConnection
                   import java.net.URL
-
+                  import java.io.InputStreamReader
                    
                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                    def connection = new URL(url).openConnection() as HttpURLConnection
-                   connection.setRequestProperty("Accept", "application/json")
-                   connection.setRequestProperty("Content-Type", "application/json")
+                   
                    connection.setRequestMethod("GET")
                    connection.connect()
 
@@ -31,7 +30,7 @@ properties([
                      def text = new InputStreamReader(response).getText()
                      echo text
                      def jsonSlurper = new JsonSlurperClassic()
-                     def data = jsonSlurperClassic.parseText(text)
+                     def data = jsonSlurper.parseText(text)
 
                      if (data.results) {
                        def results = data.results
