@@ -88,7 +88,7 @@ pipeline {
                     
                     // Pull the selected version from Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker pull ${imageName} > ${project.basedir}/target"
+                        sh "docker pull ${imageName}"
                        
                     } 
                 }
