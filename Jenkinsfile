@@ -106,15 +106,15 @@ pipeline {
                     switch (params.ENVIRONMENT) {
                         case 'test':
                             // Deploy to test environment
-                            // Add your deployment steps here
+                            echo "Deploy to test environment"
                             break
                         case 'preprod':
                             // Deploy to preprod environment
-                            // Add your deployment steps here
+                            echo "Deploy to preprod environment"
                             break
                         case 'prod':
                             // Deploy to prod environment
-                            // Add your deployment steps here
+                            echo "Deploy to prod environment"
                             break
                         default:
                             println "Invalid environment selected"
