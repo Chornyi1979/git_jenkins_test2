@@ -20,9 +20,14 @@ properties([
                   import java.io.InputStreamReader
                    
                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
-                   def connection = new URL(url).openConnection() as HttpURLConnection
-                   
+                   def connection = new URL(url).openConnection() as HttpURLConnection                   
                    connection.setRequestMethod("GET")
+
+                   String userCredentials = "chornyi1979:1979Ch1922$";
+                   String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+
+                   http_client.setRequestProperty ("Authorization", basicAuth); 
+                   
                    connection.connect()
                    def dockerhub_response = [:]
                    if (connection.responseCode == 200) {
@@ -58,9 +63,7 @@ pipeline {
             choices: ['test', 'preprod', 'prod'],
             description: 'Select the environment to deploy',
             name: 'ENVIRONMENT'
-        )
-        
-       
+        )      
     } 	
     
     stages {
@@ -78,7 +81,6 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Chornyi1979/git_jenkins_test2.git/'
             }
         }
-
         
         stage('Pull Image') {
             steps {
@@ -125,7 +127,6 @@ pipeline {
         }
             
         
-
         stage('Healthcheck') {
             steps {
                 script {
