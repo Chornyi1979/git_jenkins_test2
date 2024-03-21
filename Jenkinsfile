@@ -23,7 +23,7 @@ properties([
                    def response = connection.getInputStream()
                    def jsonSlurper = new JsonSlurper()
                    def data = jsonSlurper.parse(response)
-
+                   println data
                    def results = data.results
                    def tags = results.collect { it.name }
                    return tags
