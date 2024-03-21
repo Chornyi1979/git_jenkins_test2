@@ -19,7 +19,7 @@ properties([
 
                    
                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
-                   def connection = new URL(url).openConnection()
+                   def connection = new URL(url).openConnection() as HttpURLConnection
                    connection.setRequestProperty("Accept", "application/json")
                    connection.setRequestProperty("Content-Type", "application/json")
                    connection.setRequestMethod("GET")
