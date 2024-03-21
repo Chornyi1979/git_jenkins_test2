@@ -19,23 +19,14 @@ properties([
 
                    
                    def connection = new URL("https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags")
-                   def connection = url.openConnection() as HttpURLConnection
-                   connection.requestMethod = "GET"
-                   connection.connect()
+                   def connection = new URL(url).openConnection()
+                   def response = connection.getInputStream()
+                   def jsonSlurper = new JsonSlurper()
+                   def data = jsonSlurper.parse(response)
 
-                   if (connection.responseCode == 200) {
-                        def jsonSlurper = new JsonSlurperClassic()
-                        def response = jsonSlurper.parse(connection.inputStream)
-                       
-                        def results = response.results
-                       
-                        def tags = results.collect { it.name }
-                        return tags
-                   } else {
-                        return ["Could not get version"]
-                   }
-                }
-                                   
+                   def results = data.results
+                   def tags = results.collect { it.name }
+                   return tags
                  
                 """
             ]
