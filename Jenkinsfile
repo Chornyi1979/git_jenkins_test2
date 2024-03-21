@@ -118,6 +118,7 @@ pipeline {
                         default:
                             println "Invalid environment selected"
                             break
+                    }
                 } 
             }
         }
