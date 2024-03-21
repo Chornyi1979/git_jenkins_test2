@@ -27,7 +27,7 @@ def buildImage() {
 	}
 }
 
-def deployApp(selectedVersion) {
+def deployApp() {
     withCredentials([azureServicePrincipal(credentialsId: 'MyLabServicePrincipal', tenantIdVariable: 'TENANT_ID', clientIdVariable: 'CLIENT_ID', clientSecretVariable: 'CLIENT_SECRET')]) {
         
        
