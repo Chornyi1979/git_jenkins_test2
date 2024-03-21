@@ -18,7 +18,7 @@ properties([
                   import java.net.URL
 
                    
-                   def connection = new URL("https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags")
+                   def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                    def connection = new URL(url).openConnection()
                    connection.setRequestProperty("Accept", "application/json")
                    connection.setRequestProperty("Content-Type", "application/json")
