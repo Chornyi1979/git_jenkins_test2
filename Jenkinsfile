@@ -27,10 +27,17 @@ properties([
                   import com.cloudbees.plugins.credentials.Credentials
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   
-                    def credentials = CredentialsProvider.findCredentialsById('docker-hub-repo')
-                    if (credentials) {
-                      String userCredentials = "${credentials.username}:${credentials.password}"
-                      String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
+                   
+                  def credentials = CredentialsProvider.lookupCredentials(
+                    Credentials.class,
+                    Jenkins.instance,
+                    null,
+                    null
+                  ).find { it.id == 'docker-hub-repo' }
+                  
+                  if (credentials instanceof Credentials) {
+                    String userCredentials = "${credentials.username}:${credentials.password}"
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))                  
                     
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
