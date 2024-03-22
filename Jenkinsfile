@@ -29,7 +29,7 @@ properties([
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    connection.setRequestProperty("Authorization", "Bearer "+" TOKEN")                    
+                    connection.setRequestProperty("Authorization", "Bearer + TOKEN")                    
                     connection.connect()
                     def dockerhub_response = [:]
                     if (connection.responseCode == 200) {
