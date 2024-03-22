@@ -1,5 +1,3 @@
-import com.cloudbees.plugins.credentials.Credentials
-import com.cloudbees.plugins.credentials.CredentialsProvider
 def gv
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
@@ -24,8 +22,7 @@ properties([
                   import java.io.InputStreamReader
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
-                  import com.cloudbees.plugins.credentials.Credentials
-                  import com.cloudbees.plugins.credentials.CredentialsProvider
+                  import jenkins.model.Jenkins
                   
                    
                   def credentials = CredentialsProvider.lookupCredentials(
