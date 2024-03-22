@@ -22,8 +22,13 @@ properties([
                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                    def connection = new URL(url).openConnection() as HttpURLConnection                   
                    connection.setRequestMethod("GET")
-
                    
+                   def user = System.getenv("USER")
+                   def pass = System.getenv("PASS")
+                   def userCredentials = user + ":" + pass
+                   def basicAuth = "Basic " + userCredentials.bytes.encodeBase64().toString()
+                  
+                   connection.setRequestProperty("Authorization", basicAuth)
                    
                    connection.connect()
                    def dockerhub_response = [:]
