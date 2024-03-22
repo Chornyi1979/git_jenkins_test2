@@ -6,7 +6,7 @@ def cred() {
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         String userCredentials = "${USER}:${PASS}"
         String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
-}        
+    }        
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
