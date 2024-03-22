@@ -32,15 +32,13 @@ properties([
                         Jenkins.instance,
                         null,
                         null
-                    ).find { it.id == 'docker-hub-repo' }
+                    ).find { it.id == 'docker-hub-api-token' }
                     
                     if (credentials) {
-                        String userCredentials = "${credentials.username}:${credentials.password}"
-                        String basicAuth = "Basic " + userCredentials.bytes.encodeBase64().toString(StandardCharsets.UTF_8)
-                    
-                        connection.setRequestProperty("Authorization", basicAuth)
+                        String token = credentials.secret.toString()
+                        connection.setRequestProperty("Authorization", "Bearer " + token)
                     } else {
-                        println("Docker Hub credentials not found")
+                        println("Docker Hub API token not found")
                         System.exit(0)
                     }
 
