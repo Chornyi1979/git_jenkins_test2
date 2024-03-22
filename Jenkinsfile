@@ -21,11 +21,22 @@ properties([
                   import java.net.URL
                   import java.io.InputStreamReader
                     
-                    
+                    def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+                      com.cloudbees.plugins.credentials.common.UsernamePasswordCredentials.class,
+                      Jenkins.instance,
+                      null,
+                      null
+                    ).find { it.id == 'docker-hub-repo' }
+                  
+                    def username = credentials.username
+                    def password = credentials.password 
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                   
+                    String userCredentials = "${username}:${password}"
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
+
+                    connection.setRequestProperty("Authorization", basicAuth)
                     
                    
                     connection.connect()
