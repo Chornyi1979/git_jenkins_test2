@@ -1,5 +1,6 @@
 def gv
-
+def username = "chornyi1979"
+def repository = "my-repo"
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
@@ -20,8 +21,7 @@ properties([
                   import java.net.URL
                   import java.io.InputStreamReader
                   
-                    def username = "chornyi1979"
-                    def repository = "my-repo"
+                    
                     def url = "https://hub.docker.com/v2/repositories/${username}/${repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
