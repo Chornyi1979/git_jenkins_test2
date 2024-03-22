@@ -22,9 +22,6 @@ properties([
                   import java.io.InputStreamReader
                     
                    
-                  
-                    def username = credentials.username
-                    def password = credentials.password 
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
