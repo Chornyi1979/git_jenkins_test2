@@ -23,12 +23,13 @@ properties([
                   import java.io.InputStreamReader
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
-
+                  def TOKEN = ""
+                  withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'TOKEN')]) { 
                     
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                                        
+                    connection.setRequestProperty("Authorization", "Bearer ${TOKEN}")                    
                     connection.connect()
                     def dockerhub_response = [:]
                     if (connection.responseCode == 200) {
@@ -46,6 +47,7 @@ properties([
                     // The returned value MUST be a Groovy type of List or a related type (inherited from List)
                     // It is necessary for the Active Choice plugin to display results in a combo-box
                     return image_tag_list
+                  }  
                  """
             ]
         ]
