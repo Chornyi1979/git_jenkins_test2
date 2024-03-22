@@ -23,7 +23,7 @@ properties([
                   import java.io.InputStreamReader
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
-                    gv.cred()
+                    
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
