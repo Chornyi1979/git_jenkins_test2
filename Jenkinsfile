@@ -1,3 +1,5 @@
+import com.cloudbees.plugins.credentials.Credentials
+import com.cloudbees.plugins.credentials.CredentialsProvider
 def gv
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
