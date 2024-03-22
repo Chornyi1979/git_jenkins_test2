@@ -24,12 +24,8 @@ withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVari
                      def connection = new URL(url).openConnection() as HttpURLConnection                   
                      connection.setRequestMethod("GET")
                      
-                     def user = System.getenv("USER")
-                     def pass = System.getenv("PASS")
-                     def userCredentials = "${user}:${pass}"
-                     def basicAuth = "Basic " + userCredentials.bytes.encodeBase64().toString()
-                    
-                     connection.setRequestProperty("Authorization", basicAuth)
+                     def token = credentials('docker-hub-api-token')
+                     connection.setRequestProperty("Authorization", "Bearer ${token}")
                      
                      connection.connect()
                      def dockerhub_response = [:]
