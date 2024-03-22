@@ -24,8 +24,8 @@ properties([
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   
-                  withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    String userCredentials = "${USER}:${PASS}"
+                  withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    String userCredentials = "${USERNAME}:${PASSWORD}"
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
