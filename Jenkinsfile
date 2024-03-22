@@ -1,6 +1,6 @@
 def gv
-def username = "chornyi1979"
-def repository = "my-repo"
+def gv_username = "chornyi1979"
+def gv_repository = "my-repo"
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
@@ -20,16 +20,24 @@ properties([
                   import java.net.HttpURLConnection
                   import java.net.URL
                   import java.io.InputStreamReader
+                    def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+                      com.cloudbees.plugins.credentials.common.UsernamePasswordCredentials.class,
+                      Jenkins.instance,
+                      null,
+                      null
+                    ).find { it.id == 'docker-hub-repo' }
                   
+                    def username = credentials.username
+                    def password = credentials.password
                     
-                    def url = "https://hub.docker.com/v2/repositories/${username}/${repository}/tags"
+                    def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                    
-                    def token = credentials('docker-hub-api-token')
-                    String authHeader = "Bearer ${token}"
+                    def token = credentials('docker-hub-api-token');
+                    String authHeader = "Bearer ${token}";
 
-                    connection.setRequestProperty("Authorization", authHeader)
+                    connection.setRequestProperty("Authorization", authHeader);
                    
                     connection.connect()
                     def dockerhub_response = [:]
