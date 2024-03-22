@@ -20,16 +20,30 @@ properties([
                   import java.net.HttpURLConnection
                   import java.net.URL
                   import java.io.InputStreamReader
-                    
+                  import java.nio.charset.StandardCharsets
+  
                    
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    String userCredentials = "chornyi1979:1979Ch1922\$"
-                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
+                    
+                    def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+                        com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials.class,
+                        Jenkins.instance,
+                        null,
+                        null
+                    ).find { it.id == 'docker-hub-repo' }
+                    
+                    if (credentials) {
+                        String userCredentials = "${credentials.username}:${credentials.password}"
+                        String basicAuth = "Basic " + userCredentials.bytes.encodeBase64().toString(StandardCharsets.UTF_8)
+                    
+                        connection.setRequestProperty("Authorization", basicAuth)
+                    } else {
+                        println("Docker Hub credentials not found")
+                        System.exit(0)
+                    }
 
-                    http_client.setRequestProperty ("Authorization", basicAuth)
-                   
                     connection.connect()
                     def dockerhub_response = [:]
                     if (connection.responseCode == 200) {
