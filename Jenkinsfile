@@ -19,32 +19,40 @@ properties([
                   import java.net.HttpURLConnection
                   import java.net.URL
                   import java.io.InputStreamReader
+                  
+                    def user = ""
+                    def pass = ""
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                      user = USER
+                      pass = PASS
+                    }
+                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
+                    def connection = new URL(url).openConnection() as HttpURLConnection                   
+                    connection.setRequestMethod("GET")
                    
-                   def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
-                   def connection = new URL(url).openConnection() as HttpURLConnection                   
-                   connection.setRequestMethod("GET")
+                    String userCredentials = "USER:PASS";
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+
+                    http_client.setRequestProperty ("Authorization", basicAuth);
                    
-                   def token = credentials('docker-hub-api-token')
-                   connection.setRequestProperty("Authorization", "Bearer ${token}")
-                   
-                   connection.connect()
-                   def dockerhub_response = [:]
-                   if (connection.responseCode == 200) {
-                     dockerhub_response = new JsonSlurper().parseText(connection.inputStream.getText('UTF-8'))
-                   } else {
-                       println("HTTP response error")
-                       System.exit(0)
-                   }
-                   // Prepare a List to collect the tag names into
-                   def image_tag_list = []
-                   // Iterate the HashMap of all Tags and grab only their "names" into our List
-                   dockerhub_response.results.each { tag_metadata ->
-                       image_tag_list.add(tag_metadata.name)    
-                   }
-                   // The returned value MUST be a Groovy type of List or a related type (inherited from List)
-                   // It is necessary for the Active Choice plugin to display results in a combo-box
-                   return image_tag_list
-                """
+                    connection.connect()
+                    def dockerhub_response = [:]
+                    if (connection.responseCode == 200) {
+                      dockerhub_response = new JsonSlurper().parseText(connection.inputStream.getText('UTF-8'))
+                    } else {
+                        println("HTTP response error")
+                        System.exit(0)
+                    }
+                    // Prepare a List to collect the tag names into
+                    def image_tag_list = []
+                    // Iterate the HashMap of all Tags and grab only their "names" into our List
+                    dockerhub_response.results.each { tag_metadata ->
+                        image_tag_list.add(tag_metadata.name)    
+                    }
+                    // The returned value MUST be a Groovy type of List or a related type (inherited from List)
+                    // It is necessary for the Active Choice plugin to display results in a combo-box
+                    return image_tag_list
+                 """
             ]
         ]
     ]
