@@ -4,8 +4,7 @@ def gv_repository = "my-repo"
 def cred() {
     echo "Getting credentials..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        String userCredentials = "${USER}:${PASS}"
-        String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
+       
     }
 }
 cred()
@@ -32,7 +31,8 @@ properties([
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   
                   
-                    
+                    String userCredentials = "${USER}:${PASS}"
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
