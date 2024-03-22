@@ -49,6 +49,7 @@ properties([
                 script: """
                     return cred()
                 """
+                ]
             ]
         ]
     ])
