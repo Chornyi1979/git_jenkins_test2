@@ -1,4 +1,9 @@
 
+def cred() {
+	echo "get credential..."
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {    
+}
+
 def incrementVersion() {
 	echo "incrementing app version ..."
     sh 'mvn build-helper:parse-version versions:set \
