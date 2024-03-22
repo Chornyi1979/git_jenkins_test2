@@ -24,12 +24,14 @@ properties([
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   
-                  withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'TOKEN')]) { 
+                  withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    String userCredentials = "${USER}:${PASS}"
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    connection.setRequestProperty("Authorization", "Bearer + TOKEN")                    
+                    connection.setRequestProperty("Authorization", basicAuth)                   
                     connection.connect()
                     def dockerhub_response = [:]
                     if (connection.responseCode == 200) {
