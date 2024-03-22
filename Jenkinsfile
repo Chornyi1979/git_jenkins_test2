@@ -26,7 +26,12 @@ properties([
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                    
-                    
+                    withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'TOKEN')]) {
+                      String token = "${TOKEN}"
+                      String authHeader = "Bearer ${token}"
+
+                      connection.setRequestProperty("Authorization", authHeader)
+                    }			
                    
                     connection.connect()
                     def dockerhub_response = [:]
