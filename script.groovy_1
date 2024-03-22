@@ -1,7 +1,8 @@
 
 def cred() {
 	echo "get credential..."
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {    
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+    }
 }
 
 def incrementVersion() {
