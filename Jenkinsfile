@@ -27,20 +27,7 @@ properties([
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                     
-                    def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
-                        com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials.class,
-                        Jenkins.instance,
-                        null,
-                        null
-                    ).find { it.id == 'docker-hub-api-token' }
                     
-                    if (credentials) {
-                        String token = credentials.secret.toString()
-                        connection.setRequestProperty("Authorization", "Bearer " + token)
-                    } else {
-                        println("Docker Hub API token not found")
-                        System.exit(0)
-                    }
 
                     connection.connect()
                     def dockerhub_response = [:]
