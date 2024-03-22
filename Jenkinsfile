@@ -1,67 +1,58 @@
 def gv
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
+
 def cred() {
     echo "Getting credentials..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-       
+        // Code that uses the credentials
+        String userCredentials = "${USER}:${PASS}"
+        String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
+
+        def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
+        def connection = new URL(url).openConnection() as HttpURLConnection
+        connection.setRequestMethod("GET")
+        connection.setRequestProperty("Authorization", basicAuth)
+        connection.connect()
+        def dockerhub_response = [:]
+        if (connection.responseCode == 200) {
+            dockerhub_response = new JsonSlurper().parseText(connection.inputStream.getText('UTF-8'))
+        } else {
+            println("HTTP response error")
+            System.exit(0)
+        }
+        // Prepare a List to collect the tag names into
+        def image_tag_list = []
+        // Iterate the HashMap of all Tags and grab only their "names" into our List
+        dockerhub_response.results.each { tag_metadata ->
+            image_tag_list.add(tag_metadata.name)
+        }
+        // The returned value MUST be a Groovy type of List or a related type (inherited from List)
+        // It is necessary for the Active Choice plugin to display results in a combo-box
+        return image_tag_list
     }
 }
-cred()
+
 properties([
-  parameters([
-    [$class: 'ChoiceParameter', 
-      choiceType: 'PT_SINGLE_SELECT', 
-      description: 'Select version image',
-      filterLength: 1,
-      filterable: false,
-      name: 'VERSION', 
-      script: [
+    parameters([
+        [$class: 'ChoiceParameter',
+        choiceType: 'PT_SINGLE_SELECT',
+        description: 'Select version image',
+        filterLength: 1,
+        filterable: false,
+        name: 'VERSION',
+        script: [
             $class: 'GroovyScript',
             fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
             script: [
                 classpath: [], sandbox: false,
                 script: """
-                  import groovy.json.JsonSlurper
-                  import groovy.json.JsonSlurperClassic
-                  import java.net.HttpURLConnection
-                  import java.net.URL
-                  import java.io.InputStreamReader
-                  import java.nio.charset.StandardCharsets
-                  import com.cloudbees.plugins.credentials.CredentialsProvider
-                  
-                  
-                    String userCredentials = "${USER}:${PASS}"
-                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
-                    
-                    def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
-                    def connection = new URL(url).openConnection() as HttpURLConnection                   
-                    connection.setRequestMethod("GET")
-                    connection.setRequestProperty("Authorization", basicAuth)                   
-                    connection.connect()
-                    def dockerhub_response = [:]
-                    if (connection.responseCode == 200) {
-                      dockerhub_response = new JsonSlurper().parseText(connection.inputStream.getText('UTF-8'))
-                    } else {
-                        println("HTTP response error")
-                        System.exit(0)
-                    }
-                    // Prepare a List to collect the tag names into
-                    def image_tag_list = []
-                    // Iterate the HashMap of all Tags and grab only their "names" into our List
-                    dockerhub_response.results.each { tag_metadata ->
-                        image_tag_list.add(tag_metadata.name)    
-                    }
-                    // The returned value MUST be a Groovy type of List or a related type (inherited from List)
-                    // It is necessary for the Active Choice plugin to display results in a combo-box
-                    return image_tag_list
-                    
-                 """
+                    return cred()
+                """
             ]
         ]
-    ]
-  ])
-]) 	
+    ])
+])
 
  
 pipeline {
