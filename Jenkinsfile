@@ -1,7 +1,7 @@
 def gv
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
-
+import groovy.json.JsonSlurper
 def cred() {
     echo "Getting credentials..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
