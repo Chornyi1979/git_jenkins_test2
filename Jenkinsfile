@@ -1,4 +1,5 @@
 def gv
+def gv.cred()
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
 properties([
