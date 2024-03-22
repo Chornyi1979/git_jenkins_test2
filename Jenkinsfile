@@ -20,18 +20,12 @@ properties([
                   import java.net.URL
                   import java.io.InputStreamReader
                   
-                    def username = "chornyi1979"
-                    def repository = "my-repo"
-                    def url = "https://hub.docker.com/v2/repositories/${username}/${repository}/tags"
+                    
+                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                    
-                    withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'TOKEN')]) {
-                      String token = "${TOKEN}"
-                      String authHeader = "Bearer ${token}"
-
-                      connection.setRequestProperty("Authorization", authHeader)
-                    }
+                    
                    
                     connection.connect()
                     def dockerhub_response = [:]
