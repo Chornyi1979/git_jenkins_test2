@@ -25,7 +25,7 @@ properties([
                    
                    def user = System.getenv("USER")
                    def pass = System.getenv("PASS")
-                   def userCredentials = user + ":" + pass
+                   def userCredentials = "${user}:${pass}"
                    def basicAuth = "Basic " + userCredentials.bytes.encodeBase64().toString()
                   
                    connection.setRequestProperty("Authorization", basicAuth)
