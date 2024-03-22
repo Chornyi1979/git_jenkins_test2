@@ -23,6 +23,8 @@ properties([
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials
+                  import jenkins.model.*
+                  jenkins = Jenkins.instance
                   
                    
                     def credentials = CredentialsProvider.lookupCredentials(
