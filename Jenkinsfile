@@ -27,7 +27,10 @@ properties([
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    
+                    def credentials = Jenkins.instance.getDescriptor('com.cloudbees.plugins.credentials.SystemCredentialsProvider').getCredentials().findResult { it.id == 'docker-hub-api-token' }
+                    def token = credentials.getToken().getPlainText()
+                  
+                    connection.setRequestProperty("Authorization", "Bearer " + token)
                     
 
                     connection.connect()
