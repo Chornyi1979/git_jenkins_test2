@@ -1,5 +1,5 @@
 def gv
-def gv = load "script.groovy_1"
+
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
 properties([
