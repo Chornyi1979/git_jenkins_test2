@@ -24,8 +24,8 @@ properties([
                   import java.nio.charset.StandardCharsets
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   
-                  withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    String userCredentials = "USER:PASS"
+                  
+                    String userCredentials = "chornyi1979:1979Ch1922/$"
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
@@ -49,7 +49,7 @@ properties([
                     // The returned value MUST be a Groovy type of List or a related type (inherited from List)
                     // It is necessary for the Active Choice plugin to display results in a combo-box
                     return image_tag_list
-                  }  
+                    
                  """
             ]
         ]
