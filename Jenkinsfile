@@ -21,12 +21,7 @@ properties([
                   import java.net.URL
                   import java.io.InputStreamReader
                     
-                    def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
-                      com.cloudbees.plugins.credentials.common.UsernamePasswordCredentials.class,
-                      Jenkins.instance,
-                      null,
-                      null
-                    ).find { it.id == 'docker-hub-repo' }
+                   
                   
                     def username = credentials.username
                     def password = credentials.password 
