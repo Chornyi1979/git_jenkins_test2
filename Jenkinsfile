@@ -32,7 +32,7 @@ properties([
                   import jenkins.model.*
                   jenkins = Jenkins.instance
                     cred()                              
-                    sh ('echo $PASS | docker login -u $USER --password-stdin')
+                    
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
