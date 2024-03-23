@@ -19,7 +19,7 @@ properties([
                   import groovy.json.JsonSlurper
                   import groovy.json.JsonSlurperClassic
                   
-                                    
+                    def token = System.getenv("DOCKERHUB_TOKEN")                
                     def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
