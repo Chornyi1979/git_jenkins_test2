@@ -24,7 +24,7 @@ properties([
                     connection.setRequestMethod("GET")
                     
                     String userCredentials = '${user}:${pass}'
-                    String basicAuth = "Basic " + new String(new Base64().encode(userCredentials.getBytes()))
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     connection.setRequestProperty("Authorization", basicAuth)                 
                     connection.connect()
                     def dockerhub_response = [:]
