@@ -1,14 +1,6 @@
 def gv
-def gv_username = "chornyi1979"
-def gv_repository = "my-repo"
-def cred() {
-	echo "get credential..."
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-    }
-}
-cred()
-def user = USER
-def pass = PASS
+def user = env.USER
+def pass = env.PASS
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
@@ -32,9 +24,8 @@ properties([
                   import com.cloudbees.plugins.credentials.CredentialsProvider
                   import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials
                   import jenkins.model.*
-                  jenkins = Jenkins.instance
-                   
-                    def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
+                  
+                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                     String userCredentials = '${user}:${pass}'
