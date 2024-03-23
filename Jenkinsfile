@@ -36,7 +36,7 @@ properties([
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    String userCredentials = '${USER}:${PASS}'
+                    String userCredentials = 'USER:PASS'
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     connection.setRequestProperty("Authorization", basicAuth)                   
                     connection.connect()
