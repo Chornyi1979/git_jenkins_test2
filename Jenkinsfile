@@ -1,6 +1,11 @@
 def gv
 def gv_username = "chornyi1979"
 def gv_repository = "my-repo"
+def cred() {
+	echo "get credential..."
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+    }
+}
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
@@ -26,11 +31,11 @@ properties([
                   import jenkins.model.*
                   jenkins = Jenkins.instance
                                                     
-                    
+                    def cred()
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    String userCredentials = 'chornyi1979:1979Ch1922\$'
+                    String userCredentials = '${USER}:${PASS}'
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     connection.setRequestProperty("Authorization", basicAuth)                   
                     connection.connect()
