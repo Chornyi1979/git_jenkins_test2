@@ -23,9 +23,9 @@ properties([
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                     
-                    String userCredentials = '${user}:${pass}';
-                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
-                    connection.setRequestProperty("Authorization", basicAuth);                  
+                    String userCredentials = '${user}:${pass}'
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
+                    connection.setRequestProperty("Authorization", basicAuth)                 
                     connection.connect()
                     def dockerhub_response = [:]
                     if (connection.responseCode == 200) {
