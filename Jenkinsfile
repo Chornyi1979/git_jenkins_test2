@@ -7,8 +7,8 @@ def cred() {
     }
 }
 cred()
-def user = ${USER}
-def pass = ${PASS}
+def user = USER
+def pass = PASS
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
