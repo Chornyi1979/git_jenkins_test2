@@ -1,7 +1,7 @@
 def gv
 def user = env.USER
 def pass = env.PASS
-def token = env.docker_hub
+
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
@@ -18,11 +18,11 @@ properties([
                 script: """
                   import groovy.json.JsonSlurper
                   import groovy.json.JsonSlurperClassic
-                  
-                    def token = "${token}"              
+                                    
                     def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
+                    
                     String userCredentials = '${user}:${pass}';
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
                     connection.setRequestProperty("Authorization", basicAuth);                  
