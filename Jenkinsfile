@@ -6,6 +6,7 @@ def cred() {
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
     }
 }
+def cred()
 properties([
   parameters([
     [$class: 'ChoiceParameter', 
