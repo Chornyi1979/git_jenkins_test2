@@ -22,7 +22,7 @@ pipeline {
         printContributedVariables: true,
         causeString: 'Webhook triggered',
         printPostContent: true,
-        regexpFilterText: '$.pull_request.merged == true && $.event == "pull_request" && $.action == "closed" && $.pull_request.base.ref == "dev"'
+        regexpFilterText: '$.pull_request.merged == true && $.event == "pull_request" && $.action == "closed" && $.pull_request.base.ref == "main"'
         
         )
     }
