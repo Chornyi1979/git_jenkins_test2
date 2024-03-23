@@ -31,7 +31,7 @@ properties([
                   import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials
                   import jenkins.model.*
                   jenkins = Jenkins.instance
-                                                    
+                    def cred()                              
                     sh ('echo $PASS | docker login -u $USER --password-stdin')
                     def url = "https://hub.docker.com/v2/repositories/${gv_username}/${gv_repository}/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
