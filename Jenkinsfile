@@ -17,20 +17,13 @@ properties([
                 script: """
                   import groovy.json.JsonSlurper
                   import groovy.json.JsonSlurperClassic
-                  import java.net.HttpURLConnection
-                  import java.net.URL
-                  import java.io.InputStreamReader
-                  import java.nio.charset.StandardCharsets
-                  import com.cloudbees.plugins.credentials.CredentialsProvider
-                  import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials
-                  import jenkins.model.*
-                  
+                                    
                     def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
-                    String userCredentials = '${user}:${pass}'
-                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
-                    connection.setRequestProperty("Authorization", basicAuth)                   
+                    String userCredentials = '${user}:${pass}';
+                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+                    connection.setRequestProperty("Authorization", basicAuth);                  
                     connection.connect()
                     def dockerhub_response = [:]
                     if (connection.responseCode == 200) {
