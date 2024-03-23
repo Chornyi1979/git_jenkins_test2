@@ -23,7 +23,7 @@ properties([
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                     
-                    String userCredentials = 'ochornyi1979:dckr_pat_IeGSdIcxy1KOLMOMZTxMdLmAJlY'
+                    String userCredentials = 'ochornyi1979:dckr_pat_GJ2YpVIA9BqG15rbbQKHGXjM84w'
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     connection.setRequestProperty("Authorization", basicAuth)                 
                     connection.connect()
