@@ -23,7 +23,7 @@ properties([
                     def connection = new URL(url).openConnection() as HttpURLConnection                   
                     connection.setRequestMethod("GET")
                     
-                    String userCredentials = 'docker-hub-api-token:dckr_pat_IeGSdIcxy1KOLMOMZTxMdLmAJlY'
+                    String userCredentials = 'ochornyi1979:dckr_pat_IeGSdIcxy1KOLMOMZTxMdLmAJlY'
                     String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
                     connection.setRequestProperty("Authorization", basicAuth)                 
                     connection.connect()
