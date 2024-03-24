@@ -25,26 +25,32 @@ node {
 
 properties([
     parameters([
-        [$class: 'ChoiceParameter', 
-            choiceType: 'PT_SINGLE_SELECT', 
+        [
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
             description: 'Select version image',
             filterLength: 1,
             filterable: false,
-            name: 'VERSION', 
+            name: 'VERSION',
             script: [
                 $class: 'GroovyScript',
-                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-                script: """
-                    def images = def images = ${images.join(',')}
-                    return images.collect { image ->
-                        [name: image, value: image]
-                    }
-                """
-            ]	    
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return ["Could not get version"]'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script: '''
+                        return images
+                    '''
+                ]
+            ]
         ]
     ])
 ])
- 
+
 pipeline {
     agent any
 
