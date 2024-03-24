@@ -13,44 +13,50 @@ def getDockerImages() {
     def searchLines = searchOutput.split('\n')
 
     def images = []
-    def latestImage = ''
     searchLines.each { line ->
         def image = line.trim()
         if (image != 'Login Succeeded') {
             images.add(image)
-            if (image > latestImage) {
-                latestImage = image
-            }
         }
     }
-    images.add(latestImage)
     return images
 }
 
+def dockerImages = getDockerImages()
+
 properties([
     parameters([
-        [$class: 'ChoiceParameter',
-         choiceType: 'PT_SINGLE_SELECT',
-         description: 'Select version image',
-         filterLength: 1,
-         filterable: false,
-         name: 'VERSION',
-         script: [$class: 'GroovyScript',
-                   fallbackScript: [
-                       classpath: [],
-                       sandbox: false,
-                       script: 'return ["No images available"]'
-                   ],
-                   script: [
-                       classpath: [],
-                       sandbox: false,
-                       script: '''
-                           return getDockerImages()
-                       '''
-                   ]
-         ]]
+        [
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select version image',
+            filterLength: 1,
+            filterable: false,
+            name: 'VERSION',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return ["No images available"]'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script: '''
+                        def images = getDockerImages()
+                        if (images.size() == 0) {
+                            return ["No images available"]
+                        } else {
+                            return images
+                        }
+                    '''
+                ]
+            ]
+        ]
     ])
 ])
+
 pipeline {
     agent any
 
