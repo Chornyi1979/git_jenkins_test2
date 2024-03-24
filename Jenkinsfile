@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+
 def gv
 def images = []
 
@@ -9,13 +10,17 @@ node {
 
         // Search all images from Docker Hub
         def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --no-trunc ${dockerHubUsername}"
-        def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
-        def searchLines = searchOutput.split('\n')
+        def searchOutput = sh(script: imagesCommand, returnStdout: true, returnStatus: true).trim()
 
-        searchLines.each { line ->
-            def image = line.trim()
-            images.add(image)
-            
+        if (searchOutput.returnStatus == 0) {
+            def searchLines = searchOutput.stdout.split('\n')
+
+            searchLines.each { line ->
+                def image = line.trim()
+                images.add(image)
+            }
+        } else {
+            error("Failed to execute docker search command")
         }
     }
 }
@@ -40,8 +45,7 @@ properties([
         ]
     ]
   ])
-]) 	            
-              
+])
 
 
 
