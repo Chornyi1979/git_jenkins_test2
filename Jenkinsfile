@@ -1,6 +1,20 @@
 def gv
-def user = env.USER
-def pass = env.PASS
+def images = []
+
+withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
+    def dockerHubUsername = 'chornyi1979'
+    def dockerHubPassword = DOCKER_HUB_TOKEN
+
+    // Search all images from Docker Hub
+    def searchCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --format '{{.Name}}:{{.Tag}}' ${dockerHubUsername}"
+    def searchOutput = sh(script: searchCommand, returnStdout: true).trim()
+    def searchLines = searchOutput.split('\n')
+
+    searchLines.each { line ->
+        def image = line.trim()
+        images.add(image)
+    }
+}
 
 properties([
   parameters([
@@ -10,47 +24,10 @@ properties([
       filterLength: 1,
       filterable: false,
       name: 'VERSION', 
-      script: [
-            $class: 'GroovyScript',
-            fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-            script: [
-                classpath: [], sandbox: false,
-                script: """
-                  import groovy.json.JsonSlurper
-                  import groovy.json.JsonSlurperClassic
-                                    
-                    def url = "https://hub.docker.com/v2/repositories/chornyi1979/my-repo/tags"
-                    def connection = new URL(url).openConnection() as HttpURLConnection                   
-                    connection.setRequestMethod("GET")
-                    
-                    String userCredentials = '$USER:$PASS'
-                    String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()))
-                    connection.setRequestProperty("Authorization", basicAuth)                 
-                    connection.connect()
-                    def dockerhub_response = [:]
-                    if (connection.responseCode == 200) {
-                      dockerhub_response = new JsonSlurper().parseText(connection.inputStream.getText('UTF-8'))
-                    } else {
-                        println("HTTP response error")
-                        System.exit(0)
-                    }
-                    // Prepare a List to collect the tag names into
-                    def image_tag_list = []
-                    // Iterate the HashMap of all Tags and grab only their "names" into our List
-                    dockerhub_response.results.each { tag_metadata ->
-                        image_tag_list.add(tag_metadata.name)    
-                    }
-                    // The returned value MUST be a Groovy type of List or a related type (inherited from List)
-                    // It is necessary for the Active Choice plugin to display results in a combo-box
-                    return image_tag_list
-                    
-                 """
-            ]
-        ]
+      choices: images
     ]
   ])
-]) 	
-
+])
  
 pipeline {
     agent any
