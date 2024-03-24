@@ -22,26 +22,27 @@ def getDockerImages() {
 
 properties([
     parameters([
-        choice(
-            choiceType: 'PT_SINGLE_SELECT',
-            description: 'Select version image',
-            name: 'VERSION',
-            script: [
-                $class: 'GroovyScript',
-                fallbackScript: [
-                    classpath: [],
-                    sandbox: false,
-                    script: 'return ["No images available"]'
-                ],
-                script: [
-                    classpath: [],
-                    sandbox: false,
-                    script: '''
-                        return getDockerImages()
-                    '''
-                ]
-            ]
-        )
+        [$class: 'ChoiceParameter',
+         choiceType: 'PT_SINGLE_SELECT',
+         description: 'Select version image',
+         filterLength: 1,
+         filterable: false,
+         name: 'VERSION',
+         randomName: 'choice-parameter-1234',
+         script: [$class: 'GroovyScript',
+                   fallbackScript: [
+                       classpath: [],
+                       sandbox: false,
+                       script: 'return ["No images available"]'
+                   ],
+                   script: [
+                       classpath: [],
+                       sandbox: false,
+                       script: '''
+                           return getDockerImages()
+                       '''
+                   ]
+         ]]
     ])
 ])
 
