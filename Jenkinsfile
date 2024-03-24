@@ -26,7 +26,7 @@ node {
 properties([
     parameters([
         choice(
-            choices: images.drop(1),
+            choices: images.findAll { it != 'Login Succeeded' },
             description: 'Select version image',
             name: 'VERSION'
         )
