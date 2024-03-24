@@ -10,6 +10,7 @@ node {
 
         // Search all images from Docker Hub
         def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --no-trunc ${dockerHubUsername}"
+        echo "Command: ${imagesCommand}"
         def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
         def searchLines = searchOutput.split('\n')
 
