@@ -37,6 +37,7 @@ properties([
 	        script: [
 		    classpath: [], sandbox: false,
 		    script: """
+                        def images = ${images}
 		        return images
 		    """
 	        ]
