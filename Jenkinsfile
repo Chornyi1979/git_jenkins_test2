@@ -36,9 +36,7 @@ properties([
                 fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
                 script: """
                     def images = ${images.inspect()}
-                    return images.collect { image ->
-                        [name: image, value: image]
-                    }
+                    return images
                 """
             ]	    
         ]
