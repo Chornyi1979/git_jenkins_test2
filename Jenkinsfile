@@ -9,7 +9,7 @@ node {
         def dockerHubPassword = DOCKER_HUB_TOKEN
 
         // Search all images from Docker Hub
-        def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --no-trunc ${dockerHubUsername}"
+        def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --no-trunc ${dockerHubUsername}/my-repo"
         echo "Command: ${imagesCommand}"
         def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
         echo "Search Output: ${searchOutput}"
