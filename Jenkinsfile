@@ -1,32 +1,34 @@
 def gv
 def images = []
 
-withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
-    def dockerHubUsername = 'chornyi1979'
-    def dockerHubPassword = DOCKER_HUB_TOKEN
+node {
+    withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
+        def dockerHubUsername = 'chornyi1979'
+        def dockerHubPassword = DOCKER_HUB_TOKEN
 
-    // Search all images from Docker Hub
-    def searchCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --format '{{.Name}}:{{.Tag}}' ${dockerHubUsername}"
-    def searchOutput = sh(script: searchCommand, returnStdout: true).trim()
-    def searchLines = searchOutput.split('\n')
+        // Search all images from Docker Hub
+        def searchCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --format '{{.Name}}:{{.Tag}}' ${dockerHubUsername}"
+        def searchOutput = sh(script: searchCommand, returnStdout: true).trim()
+        def searchLines = searchOutput.split('\n')
 
-    searchLines.each { line ->
-        def image = line.trim()
-        images.add(image)
+        searchLines.each { line ->
+            def image = line.trim()
+            images.add(image)
+        }
     }
 }
 
 properties([
-  parameters([
-    [$class: 'ChoiceParameter', 
-      choiceType: 'PT_SINGLE_SELECT', 
-      description: 'Select version image',
-      filterLength: 1,
-      filterable: false,
-      name: 'VERSION', 
-      choices: images
-    ]
-  ])
+    parameters([
+        [$class: 'ChoiceParameter', 
+        choiceType: 'PT_SINGLE_SELECT', 
+        description: 'Select version image',
+        filterLength: 1,
+        filterable: false,
+        name: 'VERSION', 
+        choices: images
+        ]
+    ])
 ])
  
 pipeline {
