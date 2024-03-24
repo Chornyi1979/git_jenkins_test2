@@ -7,13 +7,15 @@ node {
         def dockerHubPassword = DOCKER_HUB_TOKEN
 
         // Search all images from Docker Hub
-        def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images my-repo
+        def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images 
         def searchOutput = sh(script: searchCommand, returnStdout: true).trim()
         def searchLines = searchOutput.split('\n')
 
         searchLines.each { line ->
-            def image = line.trim()
-            images.add(image)
+            def image = line.trim().split(/\s+/)[0]
+            if (image.startsWith(dockerHubUsername)) {
+              images.add(image)
+            }
         }
     }
 }
