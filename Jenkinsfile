@@ -35,7 +35,7 @@ properties([
                 $class: 'GroovyScript',
                 fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
                 script: """
-                    def images = ${images.toString()}
+                    def images = def images = ${images.join(',')}
                     return images.collect { image ->
                         [name: image, value: image]
                     }
