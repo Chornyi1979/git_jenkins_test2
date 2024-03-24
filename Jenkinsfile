@@ -19,7 +19,7 @@ node {
             def image = line.trim()
             images.add(image)
         }
-        echo " images: ${images}
+        echo " images: ${images}"
     }
 }
 
