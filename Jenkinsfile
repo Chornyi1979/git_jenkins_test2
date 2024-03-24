@@ -38,7 +38,9 @@ properties([
 		    classpath: [], sandbox: false,
 		    script: """
                         def images = ${images}
-		        return images
+		        return images.collect { image ->
+                            [name: image, value: image]
+                        }
 		    """
 	        ]
 	    ]	    
