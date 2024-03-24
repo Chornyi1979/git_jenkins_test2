@@ -21,25 +21,24 @@ node {
 }
 
 properties([
-  parameters([
-    [$class: 'ChoiceParameter', 
-      choiceType: 'PT_SINGLE_SELECT', 
-      description: 'Select version image',
-      filterLength: 1,
-      filterable: false,
-      name: 'VERSION', 
-      script: [
+    parameters([
+        [$class: 'ChoiceParameter', 
+        choiceType: 'PT_SINGLE_SELECT', 
+        description: 'Select version image',
+        filterLength: 1,
+        filterable: false,
+        name: 'VERSION', 
+        script: [
             $class: 'GroovyScript',
             fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
             script: [
                 classpath: [], sandbox: false,
                 script: """
                     return images
-                '''
-                
+                """
+            ]
         ]
-    ]
-  ])
+    ])
 ])
  
 pipeline {
