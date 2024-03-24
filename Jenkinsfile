@@ -14,7 +14,7 @@ node {
         def searchLines = searchOutput.split('\n')
 
         searchLines.each { line ->
-            def image = line.trim('\t')[0] 
+            def image = line.replaceAll('\t', '')
             images.add(image)
         }
     }
