@@ -12,7 +12,7 @@ node {
         def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker search --no-trunc ${dockerHubUsername}"
         def searchOutput = sh(script: imagesCommand, returnStdout: true, returnStatus: true)
 
-        if (searchOutput.returnStatus == 0) {
+        if (searchOutput.returnCode == 0) {
             def searchLines = searchOutput.stdout.trim().split('\n')
 
             searchLines.each { line ->
