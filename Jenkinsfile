@@ -30,16 +30,7 @@ properties([
         filterLength: 1,
         filterable: false,
         name: 'VERSION', 
-        script: [
-            $class: 'GroovyScript',
-            fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-            script: [
-                classpath: [], sandbox: false,
-                script: """
-                    return images
-                """
-            ]
-        ]
+        choices: images 
     ]
   ])
 ])
