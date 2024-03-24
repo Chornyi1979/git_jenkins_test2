@@ -1,7 +1,6 @@
 def gv
 import groovy.json.JsonSlurper
 
-def gv
 def images = []
 
 node {
