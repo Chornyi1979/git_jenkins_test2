@@ -2,7 +2,6 @@ def gv
 import groovy.json.JsonSlurper
 
 def getAvailableVersions() {
-    def gv
     def images = []
 
     node {
@@ -28,6 +27,8 @@ def getAvailableVersions() {
     return images.findAll { it != 'Login Succeeded' }
 }
 
+def availableVersions = getAvailableVersions()
+
 properties([
     parameters([
         [
@@ -43,7 +44,7 @@ properties([
                 script: [
                     classpath: [], sandbox: false,
                     script: """
-                        return getAvailableVersions()
+                        return ${availableVersions}
                     """
                 ]
             ]
