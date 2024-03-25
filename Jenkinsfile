@@ -23,16 +23,20 @@ node {
     }
 }
 
-def versions = images
-
 properties([
     parameters([
         [
-            $class: 'ChoiceParameter',
+            $class: 'ExtendedChoiceParameter',
             name: 'VERSION',
             description: 'Select version image',
-            choices: versions.join('\n'),
-            randomName: 'choice-parameter-1'
+            type: 'PT_SINGLE_SELECT',
+            value: '',
+            groovyScript: [
+                $class: 'GroovyScript',
+                script: '''
+                    return images
+                '''
+            ]
         ]
     ])
 ])
