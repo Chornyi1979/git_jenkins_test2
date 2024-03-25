@@ -22,7 +22,7 @@ properties([
                         import groovy.json.JsonSlurper
 
                         def images = []
-
+                        def dockerHubUsername = 'chornyi1979'
                         node {
                             withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
                                 def dockerHubUsername = 'chornyi1979'
