@@ -25,19 +25,22 @@ node {
 
 properties([
     parameters([
-        [
-            $class: 'ExtendedChoiceParameter',
-            name: 'VERSION',
-            description: 'Select version image',
-            type: 'PT_SINGLE_SELECT',
-            value: '',
-            groovyScript: [
-                $class: 'GroovyScript',
-                script: '''
-                    return images
-                '''
-            ]
-        ]
+		[$class: 'ChoiceParameter', 
+		choiceType: 'PT_SINGLE_SELECT', 
+		description: 'Select version image',
+		filterLength: 1,
+		filterable: false,
+		name: 'VERSION', 
+		script: [
+			$class: 'GroovyScript',
+			fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
+			script: [
+				classpath: [], sandbox: false,
+				script: """
+					return images
+				"""
+			]
+		]
     ])
 ])
 
