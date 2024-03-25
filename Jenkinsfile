@@ -1,34 +1,4 @@
 def gv
-import groovy.json.JsonSlurper
-
-def getAvailableVersions() {
-    def images = []
-
-    node {
-        withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
-            def dockerHubUsername = 'chornyi1979'
-            def dockerHubPassword = DOCKER_HUB_TOKEN
-
-            // Search all images from Docker Hub
-            def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images ${dockerHubUsername}/my-repo --format '{{.Tag}}'"
-            echo "Command: ${imagesCommand}"
-            def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
-            echo "Search Output: ${searchOutput}"
-            def searchLines = searchOutput.split('\n')
-
-            searchLines.each { line ->
-                def image = line.trim()
-                images.add(image)
-            }
-            echo " images: ${images}"
-        }
-    }
-
-    return images.findAll { it != 'Login Succeeded' }
-}
-
-def availableVersions = getAvailableVersions()
-
 properties([
     parameters([
         [
@@ -40,11 +10,40 @@ properties([
             name: 'VERSION',
             script: [
                 $class: 'GroovyScript',
-                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return ["Could not get version"]'
+                ],
                 script: [
-                    classpath: [], sandbox: false,
+                    classpath: [],
+                    sandbox: false,
                     script: """
-                        return ${availableVersions}
+                        import groovy.json.JsonSlurper
+
+                        def images = []
+
+                        node {
+                            withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
+                                def dockerHubUsername = 'chornyi1979'
+                                def dockerHubPassword = DOCKER_HUB_TOKEN
+
+                                // Search all images from Docker Hub
+                                def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images ${dockerHubUsername}/my-repo --format '{{.Tag}}'"
+                                echo "Command: ${imagesCommand}"
+                                def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
+                                echo "Search Output: ${searchOutput}"
+                                def searchLines = searchOutput.split('\n')
+
+                                searchLines.each { line ->
+                                    def image = line.trim()
+                                    images.add(image)
+                                }
+                                echo " images: ${images}"
+                            }
+                        }
+
+                        return images.findAll { it != 'Login Succeeded' }
                     """
                 ]
             ]
