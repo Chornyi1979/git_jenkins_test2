@@ -23,22 +23,19 @@ node {
     }
 }
 
+def versions = images
+
 properties([
     parameters([
         [
             $class: 'ChoiceParameter',
             name: 'VERSION',
             description: 'Select version image',
-            script: [
-                $class: 'GroovyScript',
-                script: '''
-                    return images
-                '''
-            ]
+            choices: versions.join('\n'),
+            randomName: 'choice-parameter-1'
         ]
     ])
 ])
-
 
 pipeline {
     agent any
