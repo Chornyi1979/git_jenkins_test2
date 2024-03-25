@@ -4,7 +4,7 @@
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <packaging>war</packaging>
-  <version>1.1.99</version>
+  <version>1.1.100</version>
   <name>my-app</name>
   <url>http://maven.apache.org</url>
   <dependencies>
