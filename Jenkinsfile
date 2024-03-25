@@ -26,7 +26,7 @@ node {
 properties([
     parameters([
         choice(
-            choices: images.findAll {},
+            choices: images,
             description: 'Select version image',
             name: 'VERSION'
         )
