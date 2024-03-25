@@ -23,19 +23,22 @@ node {
     }
 }
 
-def versions = images.findAll { it != 'Login Succeeded' }
-
 properties([
     parameters([
         [
             $class: 'ChoiceParameter',
             name: 'VERSION',
             description: 'Select version image',
-            choices: versions,
-            randomName: 'choice-parameter-1'
+            script: [
+                $class: 'GroovyScript',
+                script: '''
+                    return images
+                '''
+            ]
         ]
     ])
 ])
+
 
 pipeline {
     agent any
