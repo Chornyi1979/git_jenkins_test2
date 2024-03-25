@@ -1,47 +1,53 @@
 def gv
 import groovy.json.JsonSlurper
 
-def images = []
+def getAvailableVersions() {
+    def gv
+    def images = []
 
-node {
-    withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
-        def dockerHubUsername = 'chornyi1979'
-        def dockerHubPassword = DOCKER_HUB_TOKEN
+    node {
+        withCredentials([string(credentialsId: 'docker-hub-api-token', variable: 'DOCKER_HUB_TOKEN')]) {
+            def dockerHubUsername = 'chornyi1979'
+            def dockerHubPassword = DOCKER_HUB_TOKEN
 
-        // Search all images from Docker Hub
-        def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images ${dockerHubUsername}/my-repo --format '{{.Tag}}'"
-        echo "Command: ${imagesCommand}"
-        def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
-        echo "Search Output: ${searchOutput}"
-        def searchLines = searchOutput.split('\n')
+            // Search all images from Docker Hub
+            def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images ${dockerHubUsername}/my-repo --format '{{.Tag}}'"
+            echo "Command: ${imagesCommand}"
+            def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
+            echo "Search Output: ${searchOutput}"
+            def searchLines = searchOutput.split('\n')
 
-        searchLines.each { line ->
-            def image = line.trim()
-            images.add(image)
+            searchLines.each { line ->
+                def image = line.trim()
+                images.add(image)
+            }
+            echo " images: ${images}"
         }
-        echo " images: ${images}"
     }
+
+    return images.findAll { it != 'Login Succeeded' }
 }
 
 properties([
     parameters([
-		[  $class: 'ChoiceParameter', 
-		   choiceType: 'PT_SINGLE_SELECT', 
-		   description: 'Select version image',
-		   filterLength: 1,
-		   filterable: false,
-		   name: 'VERSION', 
-		   script: [
-			$class: 'GroovyScript',
-			fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
-			script: [
-				classpath: [], sandbox: false,
-				script: """
-					return images
-				"""
-			]
-                   ]
-                ]		 
+        [
+            $class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select version image',
+            filterLength: 1,
+            filterable: false,
+            name: 'VERSION',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [classpath: [], sandbox: false, script: 'return ["Could not get version"]'],
+                script: [
+                    classpath: [], sandbox: false,
+                    script: """
+                        return getAvailableVersions()
+                    """
+                ]
+            ]
+        ]
     ])
 ])
 
