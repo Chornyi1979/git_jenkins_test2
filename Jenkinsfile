@@ -1,6 +1,4 @@
 def gv
-import groovy.json.JsonSlurper
-
 def images = []
 
 node {
@@ -8,8 +6,13 @@ node {
         def dockerHubUsername = 'chornyi1979'
         def dockerHubPassword = DOCKER_HUB_TOKEN
 
+        // Login to Docker Hub
+        def loginCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword}"
+        echo "Login Command: ${loginCommand}"
+        sh(script: loginCommand)
+
         // Search all images from Docker Hub
-        def imagesCommand = "docker login -u ${dockerHubUsername} -p ${dockerHubPassword} && docker images ${dockerHubUsername}/my-repo --format '{{.Tag}}'"
+        def imagesCommand = "docker images ${dockerHubUsername}/my-repo --format '{{.Tag}}'"
         echo "Command: ${imagesCommand}"
         def searchOutput = sh(script: imagesCommand, returnStdout: true).trim()
         echo "Search Output: ${searchOutput}"
