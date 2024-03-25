@@ -23,13 +23,15 @@ node {
     }
 }
 
+def versions = images.findAll { it != 'Login Succeeded' }
+
 properties([
     parameters([
         [
             $class: 'ChoiceParameter',
             name: 'VERSION',
             description: 'Select version image',
-            choices: images.findAll { it != 'Login Succeeded' },
+            choices: versions,
             randomName: 'choice-parameter-1'
         ]
     ])
